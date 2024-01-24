@@ -78,13 +78,15 @@ logdStdErr() {
 
 # Prints the example usage to stderr
 # Call like so: `printUsage`
-ANSI_BOLD="\033[1m"
-ANSI_RED="\033[1m\033[91m"
-ANSI_ORANGE="\033[38;5;208m"
-ANSI_YELLOW="\033[1m\033[93m"
-ANSI_COMMAND="${ANSI_BOLD}${ANSI_YELLOW}"
-ANSI_DEFAULT="\033[0m"
 printUsage () {
+  # FIXME: zakkhoyt. Replace with echo_ansi once deployed
+  ANSI_BOLD="\033[1m"
+  ANSI_RED="\033[1m\033[91m"
+  ANSI_ORANGE="\033[38;5;208m"
+  ANSI_YELLOW="\033[1m\033[93m"
+  ANSI_COMMAND="${ANSI_BOLD}${ANSI_YELLOW}"
+  ANSI_DEFAULT="\033[0m"
+
   SCRIPT_NAME=./$(basename "$0")
   logStdErr ""
   logStdErr "Overview: This script can install or backup code snippets from IDEs (Xcode, VSCode)."
