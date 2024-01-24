@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>IDECodeSnippetCompletionPrefix</key>
-	<string>__fizw</string>
+	<string>__todow</string>
 	<key>IDECodeSnippetCompletionScopes</key>
 	<array>
 		<string>All</string>
 	</array>
 	<key>IDECodeSnippetContents</key>
-	<string>#warning("FIXME: &lt;#username#&gt; - &lt;#message#&gt;")</string>
+	<string>#warning("TODO: &lt;#username#&gt; - &lt;#message#&gt;")</string>
 	<key>IDECodeSnippetIdentifier</key>
-	<string>ADE29769-87F5-43B3-8464-306CF45A2D4B</string>
+	<string>B5DA313B-9CEC-4CFD-A912-479BE93834C9</string>
 	<key>IDECodeSnippetLanguage</key>
 	<string>Xcode.SourceCodeLanguage.Swift</string>
 	<key>IDECodeSnippetSummary</key>
 	<string></string>
 	<key>IDECodeSnippetTitle</key>
-	<string>#warning("FIXME: &lt;#username#&gt; - &lt;#message#&gt;")</string>
+	<string>hatch_todo_warning</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>

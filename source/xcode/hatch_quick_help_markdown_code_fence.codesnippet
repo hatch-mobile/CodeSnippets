@@ -11,8 +11,8 @@
 	<key>IDECodeSnippetContents</key>
 	<string>/// ## Example
 ///
-/// ```swift
-/// &lt;#swift code#&gt;
+/// ```
+/// &lt;#code#&gt;
 /// ```
 ///
 </string>
@@ -23,7 +23,7 @@
 	<key>IDECodeSnippetSummary</key>
 	<string></string>
 	<key>IDECodeSnippetTitle</key>
-	<string>docc example (swift)</string>
+	<string>hatch_quick_help_markdown_code_fence</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>

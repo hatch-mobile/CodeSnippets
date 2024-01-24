@@ -269,6 +269,7 @@ logdStdErr "SCRIPT_NAME: $SCRIPT_NAME"
 SCRIPT_DIR=$(realpath "$(dirname "$0")")
 logdStdErr "SCRIPT_DIR: $SCRIPT_DIR"
 
+# TODO: zakkhoyt. Update Help to talk about TEAM_PREFIX
 # Only snippet files with this prefix will be copied. 
 TEAM_PREFIX="hatch_"
 logdStdErr "TEAM_PREFIX: $TEAM_PREFIX"
@@ -317,6 +318,7 @@ else
   logdStdErr "  [ERROR] CLIENT_SNIPPETS_DIR was not found: $CLIENT_SNIPPETS_DIR"
   exit 11
 fi
+
 # TODO: zakkhoyt. Sync the snippet filename and name IN the file (for xcode)
 
 if [[ "$MODE" == 'list' ]]; then

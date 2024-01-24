@@ -15,7 +15,7 @@
 
 	"// TODO: username - \\(message)": {
 		"prefix": [
-			"__tozc",
+			"__todoc",
 			"//tozc",
 			".tozc"
 		],
@@ -26,7 +26,7 @@
 	},
 	"#warning(\"TODO: username - \\(message)\")": {
 		"prefix": [
-			"__tozw",
+			"__todow",
 			"//tozw",
 			".tozw"
 		],
@@ -37,7 +37,7 @@
 	},
 	"// FIXME: username - \\(message)": {
 		"prefix": [
-			"__fizc",
+			"_fixc",
 			"//fizc",
 			".fizc"
 		],
@@ -48,7 +48,7 @@
 	},
 	"#warning(\"FIXME: username - \\(message)\")": {
 		"prefix": [
-			"__fizw",
+			"_fixw",
 			"//fizw",
 			".fizw"
 		],
