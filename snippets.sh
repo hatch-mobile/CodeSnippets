@@ -74,20 +74,24 @@ logdStdErr() {
   fi
 }
 
+# FIXME: zakkhoyt. Replace with echo_ansi once deployed
+ANSI_BOLD="\033[1m"
+ANSI_ITALIC="\033[3m"
+ANSI_UNDERLINE="\033[4m"
+ANSI_RED="\033[91m"
+ANSI_CYAN="\033[96m"
+ANSI_ORANGE="\033[38;5;208m"
+ANSI_YELLOW="\033[93m"
+ANSI_ARGUMENT="${ANSI_ITALIC}${ANSI_BOLD}"
+ANSI_COMMAND="${ANSI_BOLD}${ANSI_YELLOW}"
+ANSI_FILEPATH="${ANSI_UNDERLINE}${ANSI_CYAN}"
+ANSI_DEFAULT="\033[0m"
+
 # ---- Set up our printUsage function
 
 # Prints the example usage to stderr
 # Call like so: `printUsage`
 printUsage () {
-  # FIXME: zakkhoyt. Replace with echo_ansi once deployed
-  ANSI_BOLD="\033[1m"
-  ANSI_ITALIC="\033[3m"
-  ANSI_RED="\033[1m\033[91m"
-  ANSI_ORANGE="\033[38;5;208m"
-  ANSI_YELLOW="\033[1m\033[93m"
-  ANSI_ARGUMENT="${ANSI_ITALIC}${ANSI_BOLD}"
-  ANSI_COMMAND="${ANSI_BOLD}${ANSI_YELLOW}"
-  ANSI_DEFAULT="\033[0m"
 
   SCRIPT_NAME=./$(basename "$0")
   logStdErr ""
@@ -334,13 +338,13 @@ fi
 
 
 if [[ "$MODE" == 'list' ]]; then
-  logStdErr "Available snippets: ($REPO_SNIPPETS_DIR)"
+  logStdErr "Available snippets: ${ANSI_FILEPATH}${REPO_SNIPPETS_DIR}${ANSI_DEFAULT}"
   logStdErr ""
-  find "$REPO_SNIPPETS_DIR" | sed "s|$REPO_SNIPPETS_DIR|.|g" | grep -Ev '^.$' | grep -v 'DS_Store'
+  find "$REPO_SNIPPETS_DIR" -maxdepth 1  -type f | sed "s|$REPO_SNIPPETS_DIR|.|g" | grep -Ev '^.$' | grep -v 'DS_Store' | sort
   logStdErr ""
-  logStdErr "Installed snippets: ($CLIENT_SNIPPETS_DIR)"
+  logStdErr "Installed snippets: ${ANSI_FILEPATH}${CLIENT_SNIPPETS_DIR}${ANSI_DEFAULT}"
   logStdErr ""
-  find "$CLIENT_SNIPPETS_DIR" | sed "s|$CLIENT_SNIPPETS_DIR|.|g" | grep -Ev '^.$' | grep -v 'DS_Store'
+  find "$CLIENT_SNIPPETS_DIR" -maxdepth 1  -type f | sed "s|$CLIENT_SNIPPETS_DIR|.|g" | grep -Ev '^.$' | grep -v 'DS_Store' | sort
 elif [[ "$MODE" == 'install' ]]; then
   # Backup all existing snippets before overwriting them. 
   # If dir is empty, no need to back anything up.
@@ -357,7 +361,7 @@ elif [[ "$MODE" == 'install' ]]; then
 
   # Install the snippet
   cp "$REPO_SNIPPETS_DIR"/* "$CLIENT_SNIPPETS_DIR"
-  logdStdErr "Did install ${IDE} snippets"
+  logStdErr "Did install ${IDE} snippets to ${ANSI_FILEPATH}${CLIENT_SNIPPETS_DIR}${ANSI_DEFAULT}"
 
 elif [[ "$MODE" == 'backup' ]]; then
   # If user is on `main` branch, error out (or warn depending on flags)
