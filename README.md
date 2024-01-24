@@ -30,7 +30,9 @@ For an understanding of what this tool can do, invoke the `--help` page:
 
 ## Assets
 
-Example: List snippets that are available to install
+Example: List snippets that are available to install. 
+
+The installer tool will only install/backup snippet files that have the prefix `hatch_` while the others are considered to be personal snippets (applies to Xcode only for now).
 
 <img src="https://github.com/hatch-mobile/CodeSnippets/assets/2229408/42248de6-07db-4cad-9f37-695c018049a9" width="75%">
 
