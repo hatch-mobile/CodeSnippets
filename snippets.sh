@@ -90,7 +90,7 @@ logdStdErr() {
 # Call like so: `printUsage`
 printUsage () {
   SCRIPT_NAME=./$(basename "$0")
-  logStdErr "This script will install/backup code snippets from multiple IDEs."
+  logStdErr "This script will install/backup code snippets from IDEs (Xcode, VSCode)."
   logStdErr ""
   logStdErr "Usage:"
   logStdErr "    $SCRIPT_NAME --mode <list|install|backup> --ide <xcode|vscode> [--debug] [--help]"
