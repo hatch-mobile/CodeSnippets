@@ -52,12 +52,12 @@
 
 # Writes to stdout always
 log() {
-  echo "$@";
+  echo -e "$@";
 }
 
 # Writes to stderr always
 logStdErr() {
-  echo "$@" 1>&2
+  echo -e "$@" 1>&2
 }
 
 # Writes to stdout if `--debug` param was specified.
@@ -78,46 +78,56 @@ logdStdErr() {
 
 # Prints the example usage to stderr
 # Call like so: `printUsage`
+ANSI_BOLD="\033[1m"
+ANSI_RED="\033[1m\033[91m"
+ANSI_ORANGE="\033[38;5;208m"
+ANSI_YELLOW="\033[1m\033[93m"
+ANSI_COMMAND="${ANSI_BOLD}${ANSI_YELLOW}"
+ANSI_DEFAULT="\033[0m"
 printUsage () {
   SCRIPT_NAME=./$(basename "$0")
-  logStdErr "This script will install/backup code snippets from IDEs (Xcode, VSCode)."
+  logStdErr ""
+  logStdErr "Overview: This script can install or backup code snippets from IDEs (Xcode, VSCode)."
   logStdErr ""
   logStdErr "Usage:"
   logStdErr "    $SCRIPT_NAME --mode <list|install|backup> --ide <xcode|vscode> [--debug] [--help]"
   logStdErr ""
   logStdErr "Mandatory:"
-  logStdErr "    --mode: The mode for the script to operate in (list, install or backup)."
+  logStdErr "    ${ANSI_BOLD}--mode${ANSI_DEFAULT}: The mode for the script to operate in (list, install or backup)."
   logStdErr "        list: Print a list of the snippet files availabel to be installed."
-  logStdErr "        install: Copies snippets from repo dir to IDE dir. Note: Any exsting snippets will first be copied to a backup folder in the destination directory."
-  logStdErr "        list: Print a list of the snippet files availabel to be installed."
+  logStdErr "        install: Copies snippets from repo dir to IDE dir."
+  logStdErr "          ${ANSI_ORANGE}Note${ANSI_DEFAULT}: Any exsting snippets will first be copied to a backup folder in the destination directory."
+  logStdErr "        backup: Copies snippets from IDE dir into repo dir."
+  logStdErr "          ${ANSI_ORANGE}Note${ANSI_DEFAULT}: Only files that begin with ${ANSI_ORANGE}'hatch_'${ANSI_DEFAULT} will be copied"
+  logStdErr "          ${ANSI_ORANGE}Note${ANSI_DEFAULT}: This will result in an ${ANSI_RED}error${ANSI_DEFAULT} if user is still on 'main' git branch"
   logStdErr ""
-  logStdErr "    --ide: Specifies which IDE to install/backup the snippets to/from."
+  logStdErr "    ${ANSI_BOLD}--ide${ANSI_DEFAULT}: Specifies which IDE to install/backup the snippets to/from."
   logStdErr "        xcode: Apple's Xcode in default installation path."
   logStdErr "        vscode: Visual Studio Code in default installation path."
   logStdErr ""
   logStdErr "Optional:"
-  logStdErr "    --debug: Print debug level logs."
-  logStdErr "    --help: Print this message"
+  logStdErr "    ${ANSI_BOLD}--debug${ANSI_DEFAULT}: Print debug level logs."
+  logStdErr "    ${ANSI_BOLD}--help${ANSI_DEFAULT}: Print this message"
   logStdErr ""
   logStdErr "EX: (Xcode)"
   logStdErr "    List the Xcode snippets that are available to be installed."
-  logStdErr "    \$ $SCRIPT_NAME --mode list --ide xcode"
+  logStdErr "    \$ ${ANSI_COMMAND}$SCRIPT_NAME --mode list --ide xcode${ANSI_DEFAULT}"
   logStdErr ""
   logStdErr "    Install Xcode snippets onto your system."
-  logStdErr "    \$ $SCRIPT_NAME --mode install --ide xcode"
+  logStdErr "    \$ ${ANSI_COMMAND}$SCRIPT_NAME --mode install --ide xcode${ANSI_DEFAULT}"
   logStdErr ""
-  logStdErr "    Back up Xcode snippets from your system to this directory (make your own pull request)/"
-  logStdErr "    \$ $SCRIPT_NAME --mode backup --ide xcode"
+  logStdErr "    Back up Xcode snippets from your system to this directory (make your own pull request)."
+  logStdErr "    \$ ${ANSI_COMMAND}$SCRIPT_NAME --mode backup --ide xcode${ANSI_DEFAULT}"
   logStdErr ""
   logStdErr "EX: (VSCode)"
   logStdErr "    List the VSCode snippets that are available to be installed."
-  logStdErr "    \$ $SCRIPT_NAME --mode list --ide vscode"
+  logStdErr "    \$ ${ANSI_COMMAND}$SCRIPT_NAME --mode list --ide vscode${ANSI_DEFAULT}"
   logStdErr ""
   logStdErr "    Install VSCode snippets onto your system."
-  logStdErr "    \$ $SCRIPT_NAME --mode install --ide vscode"
+  logStdErr "    \$ ${ANSI_COMMAND}$SCRIPT_NAME --mode install --ide vscode${ANSI_DEFAULT}"
   logStdErr ""
-  logStdErr "    Back up VSCode snippets from your system to this directory (make your own pull request)/"
-  logStdErr "    \$ $SCRIPT_NAME --mode backup --ide vscode"
+  logStdErr "    Back up VSCode snippets from your system to this directory (make your own pull request)."
+  logStdErr "    \$ ${ANSI_COMMAND}$SCRIPT_NAME --mode backup --ide vscode${ANSI_DEFAULT}"
   logStdErr ""
 }
 
@@ -129,7 +139,6 @@ unset -v IS_ADMIN
 unset -v LIST_AUTHORS
 unset -v TYPE
 
-# TODO: zakkhoyt. Consider returning a delimited string like echo_ansi's extract_cursor_direction
 # Parses script arguments which take the form of:
 #   * --key=value
 #   * --key value
@@ -269,7 +278,6 @@ logdStdErr "SCRIPT_NAME: $SCRIPT_NAME"
 SCRIPT_DIR=$(realpath "$(dirname "$0")")
 logdStdErr "SCRIPT_DIR: $SCRIPT_DIR"
 
-# TODO: zakkhoyt. Update Help to talk about TEAM_PREFIX
 # Only snippet files with this prefix will be copied. 
 TEAM_PREFIX="hatch_"
 logdStdErr "TEAM_PREFIX: $TEAM_PREFIX"
@@ -319,7 +327,7 @@ else
   exit 11
 fi
 
-# TODO: zakkhoyt. Sync the snippet filename and name IN the file (for xcode)
+
 
 if [[ "$MODE" == 'list' ]]; then
   logStdErr "Available snippets: ($REPO_SNIPPETS_DIR)"
@@ -330,15 +338,23 @@ if [[ "$MODE" == 'list' ]]; then
   logStdErr ""
   find "$CLIENT_SNIPPETS_DIR" | sed "s|$CLIENT_SNIPPETS_DIR|.|g" | grep -Ev '^.$' | grep -v 'DS_Store'
 elif [[ "$MODE" == 'install' ]]; then
-  # Backup all existing snippets before overwriting them
-  TIMESTAMP=$(date +%Y%m%d%H%M%S)
-  BACKUP_DIR="${CLIENT_SNIPPETS_DIR}/backup_${TIMESTAMP}"
-  logdStdErr "Backing up existing snippets to ${BACKUP_DIR}"
-  mkdir "${BACKUP_DIR}"
-  cp "${CLIENT_SNIPPETS_DIR}"/* "${BACKUP_DIR}"
+  # Backup all existing snippets before overwriting them. 
+  # If dir is empty, no need to back anything up.
+  if find "$CLIENT_SNIPPETS_DIR" -mindepth 1 -maxdepth 1 -not -path '*/.*' | read -r; then
+    # Backup all existing snippets before overwriting them
+    TIMESTAMP=$(date +%Y%m%d%H%M%S)
+    BACKUP_DIR="${CLIENT_SNIPPETS_DIR}/backup_${TIMESTAMP}"
+    logdStdErr "Backing up existing snippets to ${BACKUP_DIR}"
+    mkdir "${BACKUP_DIR}"
+    find "${CLIENT_SNIPPETS_DIR}" -maxdepth 1 -type f -print0 | xargs -0 -I {} cp {} "${BACKUP_DIR}"
+  else
+    logdStdErr "Skipping backup of existing snippets (dir is empty) ${BACKUP_DIR}"
+  fi
 
+  # Install the snippet
   cp "$REPO_SNIPPETS_DIR"/* "$CLIENT_SNIPPETS_DIR"
   logdStdErr "Did install ${IDE} snippets"
+
 elif [[ "$MODE" == 'backup' ]]; then
   # If user is on `main` branch, error out (or warn depending on flags)
   CURRENT_BRANCH=$(git branch | grep -E "^\*" | sed -E 's/\* //g')
@@ -358,6 +374,9 @@ elif [[ "$MODE" == 'backup' ]]; then
     cp "${CLIENT_SNIPPETS_DIR}/${TEAM_PREFIX}"*."${SNIPPET_EXTENSION}" "${REPO_SNIPPETS_DIR}"
     set +x
   done
+
+  # TODO: zakkhoyt. For each snippet, update the XML so that the title matches the file name (Xcode only)
+
   log "Did back up ${IDE} snippets."
 else 
   logStdErr "[ERROR] Unhandle value for MODE: ${MODE}"
