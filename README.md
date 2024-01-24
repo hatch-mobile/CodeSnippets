@@ -12,15 +12,20 @@ cd CodeSnippets
 
 ## Usage 
 ```sh
-$ ./snippets.sh --help
 This script will install/backup code snippets from IDEs (Xcode, VSCode).
 
 Usage:
     ./snippets.sh --mode <list|install|backup> --ide <xcode|vscode> [--debug] [--help]
 
 Mandatory:
-    --mode: The mode for the script to operate in (install or backup).
-    --id: Specifies which IDE to install/backup the snippets to/from.
+    --mode: The mode for the script to operate in (list, install or backup).
+        list: Print a list of the snippet files availabel to be installed.
+        install: Copies snippets from repo dir to IDE dir. Note: Any exsting snippets will first be copied to a backup folder in the destination directory.
+        list: Print a list of the snippet files availabel to be installed.
+
+    --ide: Specifies which IDE to install/backup the snippets to/from.
+        xcode: Apple's Xcode in default installation path.
+        vscode: Visual Studio Code in default installation path.
 
 Optional:
     --debug: Print debug level logs.

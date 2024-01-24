@@ -96,8 +96,14 @@ printUsage () {
   logStdErr "    $SCRIPT_NAME --mode <list|install|backup> --ide <xcode|vscode> [--debug] [--help]"
   logStdErr ""
   logStdErr "Mandatory:"
-  logStdErr "    --mode: The mode for the script to operate in (install or backup)."
-  logStdErr "    --id: Specifies which IDE to install/backup the snippets to/from."
+  logStdErr "    --mode: The mode for the script to operate in (list, install or backup)."
+  logStdErr "        list: Print a list of the snippet files availabel to be installed."
+  logStdErr "        install: Copies snippets from repo dir to IDE dir. Note: Any exsting snippets will first be copied to a backup folder in the destination directory."
+  logStdErr "        list: Print a list of the snippet files availabel to be installed."
+  logStdErr ""
+  logStdErr "    --ide: Specifies which IDE to install/backup the snippets to/from."
+  logStdErr "        xcode: Apple's Xcode in default installation path."
+  logStdErr "        vscode: Visual Studio Code in default installation path."
   logStdErr ""
   logStdErr "Optional:"
   logStdErr "    --debug: Print debug level logs."
@@ -325,10 +331,17 @@ fi
 if [[ "$MODE" == 'list' ]]; then
   find "$REPO_SNIPPETS_DIR" | sed "s|$SCRIPT_DIR|.|g"
 elif [[ "$MODE" == 'install' ]]; then
-  # TODO: zakkhoyt. Backup all existing snippets before overwriting them
+  # Backup all existing snippets before overwriting them
+  TIMESTAMP=$(date +%Y%m%d%H%M%S)
+  BACKUP_DIR="${CLIENT_SNIPPETS_DIR}/backup_${TIMESTAMP}"
+  logdStdErr "Backing up existing snippets to ${BACKUP_DIR}"
+  mkdir "${BACKUP_DIR}"
+  cp "${CLIENT_SNIPPETS_DIR}"/* "${BACKUP_DIR}"
+
   cp "$REPO_SNIPPETS_DIR"/* "$CLIENT_SNIPPETS_DIR"
   logdStdErr "Did install ${IDE} snippets"
 elif [[ "$MODE" == 'backup' ]]; then
+  # If user is on `main` branch, error out (or warn depending on flags)
   CURRENT_BRANCH=$(git branch | grep -E "^\*" | sed -E 's/\* //g')
   if [[ "$CURRENT_BRANCH" == 'main' ]]; then
     if [[ -n "$IS_ADMIN" ]]; then 
@@ -338,7 +351,8 @@ elif [[ "$MODE" == 'backup' ]]; then
       exit 2
     fi
   fi
-  
+
+  # copy snippets from client machine into repo
   for SNIPPET_EXTENSION in "${SNIPPET_EXTENSIONS[@]}"; do
     logdStdErr "Backing up ${IDE} snippets with prefix '${TEAM_PREFIX}' and extension '${SNIPPET_EXTENSION}'..."
     set -x
