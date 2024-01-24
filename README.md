@@ -12,7 +12,7 @@ cd CodeSnippets
 
 ## Usage 
 
-TLDR: You probably just want to install the Xcode snippets:
+TLDR: If you just want to install the Xcode snippets onto your dev machine:
 ```
 # list snippets
 ./snippets.sh --ide xcode --mode list
@@ -22,7 +22,6 @@ TLDR: You probably just want to install the Xcode snippets:
 ```
 
 For an understanding of what this tool can do, invoke the `--help` page:
-
 ```
 This script will install/backup code snippets from IDEs (Xcode, VSCode).
 
