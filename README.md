@@ -36,5 +36,5 @@ Example: List snippets that are available to install
 
 Example: Installing snippets for Xcode
 
-<img src="https://github.com/hatch-mobile/CodeSnippets/assets/2229408/5fb386f4-bacf-4bd6-a0a9-bdfe1f6b9aa4" width="75%">
+<img src="https://github.com/hatch-mobile/CodeSnippets/assets/2229408/5fb386f4-bacf-4bd6-a0a9-bdfe1f6b9aa4" width="85%">
 
