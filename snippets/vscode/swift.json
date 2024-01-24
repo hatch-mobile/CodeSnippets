@@ -1,0 +1,159 @@
+{
+	// Place your snippets for swift here. Each snippet is defined under a snippet name and has a prefix, body and 
+	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the 
+	// same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+
+	"// TODO: zakkhoyt - \\(message)": {
+		"prefix": [
+			"__tozc",
+			"//tozc",
+			".tozc"
+		],
+		"body": [
+			"# TODO: zakkhoyt. $1",
+			"$0"
+		]
+	},
+	"#warning(\"TODO: zakkhoyt - \\(message)\")": {
+		"prefix": [
+			"__tozw",
+			"//tozw",
+			".tozw"
+		],
+		"body": [
+			"#warning(\"FIXME: zakkhoyt - ${1:message}\")",
+			"$0"
+		]
+	},
+	"// FIXME: zakkhoyt - \\(message)": {
+		"prefix": [
+			"__fizc",
+			"//fizc",
+			".fizc"
+		],
+		"body": [
+			"# FIXME: zakkhoyt. $1",
+			"$0"
+		]
+	},
+	"#warning(\"FIXME: zakkhoyt - \\(message)\")": {
+		"prefix": [
+			"__fizw",
+			"//fizw",
+			".fizw"
+		],
+		"body": [
+			"#warning(\"FIXME: zakkhoyt - ${1:message}\")",
+			"$0"
+		]
+	},
+	"Quick Comment Jira Ticket": {
+		"scope": "c,cpp,swift",
+		"description": "A quick comment for Jira ticket (HSD)",
+		"prefix": [
+			"__qchsd",
+			"//qchsd",
+			".qchsd"
+		],
+		"body": [
+			"/// **Jira**",
+			"///",
+			"/// [HSD-${1:NNNN}](https://hatchbaby.atlassian.net/browse/HSD-${1:NNNN})",
+			"///",
+			"$0"
+		]
+	},
+	"Quick Comment Local File": {
+		"scope": "c,cpp,swift",
+		"description": "A quick comment for Local File",
+		"prefix": [
+			"__qcfile",
+			"//qcfile",
+			".qcfile"
+		],
+		"body": [
+			"/// **LocalFile**",
+			"///",
+			"/// [${1:filename}](${2:filepath})",
+			"///",
+			"$0"
+		]
+	},
+	"Quick Comment See Also": {
+		"scope": "c,cpp,swift",
+		"description": "A quick comment for Local File",
+		"prefix": [
+			"__qcurl",
+			"//qcurl",
+			".qcurl"
+		],
+		"body": [
+			"/// **SeeAlso**",
+			"///",
+			"/// [${1:name}](${2:url})",
+			"///",
+			"$0"
+		]
+	},
+	"Quick Comment See Also": {
+		"scope": "c,cpp,swift",
+		"description": "A quick comment for Local File",
+		"prefix": [
+			"__qccall",
+			"//qccall",
+			".qccall"
+		],
+		"body": [
+			"/// ${10:Summary}",
+			"/// - Attention: Who|What",
+			"/// - Authors: ${20:@user}",
+			"/// - Bug: ${30:Describe}",
+			"/// - Complexity: ${40:`O(n^3)`}",
+			"/// - Copyright: ${50:Date}",
+			"/// - Date: ${60:Date}",
+			"/// - Experiment: ${70:Describe}",
+			"/// - Important: ${80:Describe}",
+			"/// - Invariant: ${90:Describe what doesn't change.}",
+			"/// - Note: ${100:Content}",
+			"/// - Parameter ${110:Name}: `${111:Type}` ${112:Describe}",
+			"/// - Postcondition: ${120:Describe}",
+			"/// - Precondition: ${130:Describe}",
+			"/// - Remark: ${140:Describe}",
+			"/// - Requires: ${150:Describe}",
+			"/// - Returns: ${160:Describe}",
+			"/// - Since: ${170:Introduced When}",
+			"/// - Throws: ${180:Describe} `${181:Type}`",
+			"/// - ToDo: ${190:Describe}",
+			"/// - Version: ${200:Describe}",
+			"/// - Warning: ${210:Describe}",
+			"$0"
+		]
+	},
+
+	// "reminder": {
+	// 	"scope": "c,cpp,swift",
+	// 	"description": "A tag/reminder comment (w/username, category, message, url)",
+	// 	"prefix": [
+	// 		".fixme",
+	// 		".todo",
+	// 		".idea",
+	// 		"//fixme",
+	// 		"//todo",
+	// 		"//idea"
+	// 	],
+	// 	"body": [
+	// 		"// ${10:${11:FIXME}${12:TODO}${13:IDEA}}: ${21:zakkhoyt}.${30: [${31:<category>}]}${40: ${41:<message>}.}${50: Link: ${51:<URL>}}",
+	// 		"$0"
+	// 	]
+	// },
+}

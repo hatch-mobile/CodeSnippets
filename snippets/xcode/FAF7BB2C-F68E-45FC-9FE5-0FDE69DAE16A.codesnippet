@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>__qcjira</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>/// **Jira**
+///
+/// [HSD-&lt;#NNNN#&gt;](https://hatchbaby.atlassian.net/browse/HSD-&lt;#NNNN#&gt;)",
+///</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>FAF7BB2C-F68E-45FC-9FE5-0FDE69DAE16A</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>quick comment for a Jira (HSD) flavored URL </string>
+	<key>IDECodeSnippetTitle</key>
+	<string>Jira Ticket (HSD)</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

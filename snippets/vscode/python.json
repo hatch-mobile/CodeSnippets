@@ -1,0 +1,68 @@
+{
+	// Place your snippets for python here. Each snippet is defined under a snippet name and has a prefix, body and 
+	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the 
+	// same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"prefix": "log",
+	// 	"body": [
+	// 		"console.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// }
+
+	"Comment Function": {
+		"description": "A python function comment snippet",
+		"prefix": [
+			".comFunc"
+		],
+		"body": [
+			"\"\"\"",
+			"${1:## Summary",
+			"${2:<A short description>}",
+			"}",
+			"${10:## Parameters",
+			"* `${11:name}` (`${12:type}`): ${13:description}",
+			"}",
+			"${20:## Returns",
+			"* (`${22:type}`): ${23:description}}",
+			"\"\"\"",
+			"$0"
+		]
+	}
+
+	// See ~/Library/Application Support/Code/User/snippets/snippets-global.code-snippets for global snippets
+
+	// "FIXME: {username} [{category}] {note}.": {
+	// 	"description": "A FIXME comment for python (w/username, category, note)",
+	// 	"prefix": [
+	// 		".fixme"
+	// 	],
+	// 	"body": [
+	// 		"# FIXME: ${1:zakkhoyt}.${2:< [${3:category}]>} ${4:<note>}.",
+	// 		"$0"
+	// 	]
+	// },
+	// "TODO: {username} [{category}] {note}.": {
+	// 	"description": "A TODO comment for python (w/username, category, note)",
+	// 	"prefix": [
+	// 		".todo"
+	// 	],
+	// 	"body": [
+	// 		"# TODO: ${1:zakkhoyt}.${2:< [${3:category}]>} ${4:<note>}.",
+	// 		"$0"
+	// 	]
+	// },
+	// "NOTE: {username} [{category}] {note}.": {
+	// 	"description": "A NOTE comment for python (w/username, category, note)",
+	// 	"prefix": [
+	// 		".note"
+	// 	],
+	// 	"body": [
+	// 		"# NOTE: ${1:zakkhoyt}.${2:< [${3:category}]>} ${4:<note>}.",
+	// 		"$0"
+	// 	]
+	// }
+}

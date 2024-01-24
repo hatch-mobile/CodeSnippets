@@ -1,0 +1,130 @@
+{
+	// Place your snippets for shellscript here. Each snippet is defined under a snippet name and has a prefix, body and 
+	// description. The prefix is what is used to trigger the snippet and the body will be expanded and inserted. Possible variables are:
+	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. Placeholders with the 
+	// same ids are connected.
+	// Example:
+	// "Print to console": {
+	// 	"prefix": ".log",
+	// 	"body": [
+	// 		"con$0sole.log('$1');",
+	// 		"$2"
+	// 	],
+	// 	"description": "Log output to console"
+	// },
+
+
+
+	// See ~/Library/Application Support/Code/User/snippets/snippets-global.code-snippets for global snippets
+
+
+	// "Comment Function": {
+	// 	"description": "A python function comment snippet",
+	// 	"prefix": [
+	// 		".comFunc"
+	// 	],
+	// 	"body": [
+	// 		"\"\"\"",
+	// 		"${1:## Summary",
+	// 		"${2:<A short description>}",
+	// 		"}",
+	// 		"${10:## Parameters",
+	// 		"* `${11:name}` (`${12:type}`): ${13:description}",
+	// 		"}",
+	// 		"${20:## Returns",
+	// 		"* (`${22:type}`): ${23:description}}",
+	// 		"\"\"\"",
+	// 		"$0"
+	// 	]
+	// },
+
+	// For multiline snippets, try this tool: https://www.freeformatter.com/json-escape.html#before-output
+	"BASH SCRIPT TEMPLATE": {
+		"description": "A template for bash shell script",
+		"prefix": [
+			".shtem", 
+			"#shtem"
+		],
+		"body": [
+			"#!\/bin\/bash\r\n\r\n# Get filename of script\r\nSCRIPT_NAME=\\$(basename \"\\$0\")\r\n# echo \"SCRIPT_NAME: \\$SCRIPT_NAME\"\r\n\r\n# Get dir of script\r\nSCRIPT_DIR=\\$(realpath \"\\$(dirname \"\\$0\")\")\r\n# echo \"SCRIPT_DIR: \\$SCRIPT_DIR\"\r\n\r\n# Call from main script like so: `printUsage`\r\nprintUsage () {\r\n  SCRIPT_NAME=.\/\\$(basename \"\\$0\")\r\n  # echo \"SCRIPT_NAME: \\$SCRIPT_NAME\"\r\n  echo \"Commits and pushes to all git submodules and root repo.\"\r\n  echo \"\"\r\n  echo \"Usage:\"\r\n  echo \"    \\$SCRIPT_NAME <commit_message>\"\r\n}\r\n\r\nif [[ \\$1 == \"help\" || \\$1 == \"-h\" || \\$1 == \"--help\" ]]; then\r\n  printUsage \r\n  exit 1\r\nfi\r\n\r\n# ---- ---- ---- ---- ---- ---- ---- ---- Boilerplate above, unique below\r\n\r\nif [[ \\$# -lt 1 ]]; then\r\n  printUsage\r\n  exit 1\r\nfi\r\n\r\n# Make a copy of args array\r\nargs=(\"\\$@\") \r\n\r\n# Loops on array (no index)\r\nfor arg in \"\\${@}\"; do\r\n  echo \"\\$arg\"\r\ndone\r\n\r\n# Loops on array (manual index)\r\ncounter=0\r\nfor arg in \"\\${@}\"; do\r\n  echo \"\\$counter: \\$arg\"\r\n  counter=\\$((counter+1))\r\ndone\r\n\r\n# Loops on array (with index)\r\nfor i in \"\\${!args[@]}\"; do \r\n# for ((i=0; i<\\${#args[@]}; i++)); do\r\n  echo \"args[\\$i]: \\${args[\\$i]}\"\r\ndone"
+		]
+	},
+
+	"$MY_VAR": {
+		"description": "Insert a shell var nested in ${MY_VAR}",
+		"prefix": [
+			".var", 
+			"#var"
+		],
+		"body": [
+			"$${20:<var_name>}$0",
+		]
+	},
+	"<nested>$MY_VAR<nested>": {
+		"description": "Insert a shell var nested in ${MY_VAR} which is nested in matching strings.",
+		"prefix": [
+			".varw", 
+			"#varw"
+		],
+		"body": [
+			"${10:<prefix>}$${20:<var_name>}${10:<suffix>}$0",
+		]
+	},
+	"${MY_VAR}": {
+		"description": "Insert a shell var nested in ${MY_VAR}",
+		"prefix": [
+			".varb", 
+			"#varb"
+		],
+		"body": [
+			"${${20:<var_name>}}$0",
+		]
+	},
+	"<nested>${MY_VAR}<nested>": {
+		"description": "Insert a shell var nested in ${MY_VAR} which is nested in matching strings.",
+		"prefix": [
+			".varbw", 
+			"#varbw"
+		],
+		"body": [
+			"${10:<prefix>}${${20:<var_name>}}${10:<suffix>}$0",
+		]
+	},
+	// "FIXME: {username} [{category}] {note}. Link: {url}": {
+	// 	"description": "A FIXME comment for shell scripts (w/username, category, message, url)",
+	// 	"prefix": [
+	// 		".fixme", 
+	// 		"#fixme"
+	// 	],
+	// 	"body": [
+	// 		"# FIXME: ${21:zakkhoyt}.${30: [${31:<category>}]}${40: ${41:<message>}.}${50: Link: ${51:<URL>}}",
+	// 		"$0"
+	// 	]
+	// },
+	// "TODO: {username} [{category}] {note}. Link: {url}": {
+	// 	"description": "A TODO comment for shell scripts (w/username, category, message, url)",
+	// 	"prefix": [
+	// 		".todo", 
+	// 		"#todo"
+	// 	],
+	// 	"body": [
+	// 		"# TODO: ${21:zakkhoyt}.${30: [${31:<category>}]}${40: ${41:<message>}.}${50: Link: ${51:<URL>}}",
+	// 		"$0"
+	// 	]
+	// },
+	// "TAG: {username} [{category}] {note}. Link: {url}": {
+	// 	"description": "A reminder comment for shell scripts (w/username, category, message, url)",
+	// 	"prefix": [
+	// 		".alert",
+	// 		".block",
+	// 		".remind",
+	// 		".tag"
+	// 	],
+	// 	"body": [
+	// 		// "# ${10:${11:FIXME}${12:TODO}${13:IDEA}}:${20: ${21:<username>}.}${30: [${31:<category>}]}${40: ${41:<message>}.}${50: Link: ${51:<URL>}}",
+	// 		"# ${10:${11:FIXME}${12:TODO}${13:IDEA}}: ${21:zakkhoyt}.${30: [${31:<category>}]}${40: ${41:<message>}.}${50: Link: ${51:<URL>}}",
+	// 		"$0"
+	// 	]
+	// }
+
+}

@@ -1,0 +1,137 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>__qcmarkex</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>    /// This snippet demonstrates how to use Markdown to format comments for Quick Help.
+    ///
+    /// # Font
+    ///
+    /// plain string
+    ///
+    /// *italic string*
+    ///
+    /// **bold string**
+    ///
+    /// ~~strikeout string~~
+    ///
+    /// &gt; blockquote (renders as note)
+    ///
+    /// # Heading
+    ///
+    /// # Header 1
+    ///
+    /// ## Header 2
+    ///
+    /// ### Header 3
+    ///
+    /// # URL
+    /// ## Link
+    /// [hatch.co](https://www.hatch.co/)
+    ///
+    /// ## Email
+    /// [iosDevs@hatch.co](mailto:iosDevs@hatch.co)
+    ///
+    /// ## Image
+    /// Hatch Logo: ![hatch logo](https://www.hatch.co/img/logos/hatch-logo.svg)
+    ///
+    /// # Code
+    /// ## Inline
+    /// `inline code`
+    ///
+    /// ## Indented
+    ///
+    ///     let a = "abc"
+    ///     let b = a
+    ///
+    /// ## Fenced
+    /// ```
+    /// let a = "abc"
+    /// dump(a)
+    /// ```
+    ///
+    /// ## Fenced (swift)
+    /// ```swift
+    /// let a = "abc"
+    /// dump(a)
+    /// ```
+    ///
+    /// ## Fenced (json)
+    /// ```json
+    /// {
+    ///   "employees": [
+    ///     { "github": "mr_swift" },
+    ///     { "github": "mr_cpp" }
+    ///   ]
+    /// }
+    /// ```
+    ///
+    /// # Lists
+    ///
+    /// ## Unordered
+    ///
+    /// * root
+    ///     * child 1
+    ///         * grandchild a
+    ///         * grandchild b
+    ///     * child 2
+    ///
+    /// ## Unordered (Task)
+    ///
+    /// * [ ] Unfinished Task
+    /// * [X] Finished Task
+    ///
+    /// ## Ordered
+    ///
+    /// 1. First Item
+    /// 2. Second Item
+    ///     1. child a
+    ///     2. child b
+    /// 3. Third Item
+    ///
+    /// # References
+    ///
+    /// * [Writing Documentation](https://developer.apple.com/documentation/xcode/creating-organizing-and-editing-source-files)
+    ///     * [Writing symbol documentation in your source files](https://developer.apple.com/documentation/xcode/creating-organizing-and-editing-source-files)
+    /// * [Callouts for Quick Comments](https://developer.apple.com/library/archive/documentation/Xcode/Reference/xcode_markup_formatting_ref/Attention.html#//apple_ref/doc/uid/TP40016497-CH29-SW1)
+    /// * [DocC: API Documentation](https://developer.apple.com/documentation/docc/api-reference-syntax/)
+    /// * [Markdown Syntax](https://www.markdownguide.org/cheat-sheet/)
+    ///
+    /// # Unsupported Markdown
+    /// Not all Markdown syntax is supported. The following were found not to be compatible when
+    /// using Xcode 15.3:
+    ///
+    /// * subscript
+    /// * superscript
+    /// * highlight
+    /// * emoji syntax
+    /// * horizontal rule
+    /// * nested URLs (clickable image)
+    /// * table
+    /// * footnote
+    /// * nested HTML
+    ///
+    /// # Bugs
+    /// The following "bugs" were noticed when testing on Xcode 15.3
+    /// * Image links seem to be rendered with `.center` alignment instead of the expected `.leading`.
+    /// * When markdown is used in a Code Snippet, user cannot tab over a markdown heading (`# Heading`) of any depth, instead must click into the next section. </string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>9D2C3C16-8625-47D5-B076-EB7FDB40F825</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetSummary</key>
+	<string></string>
+	<key>IDECodeSnippetTitle</key>
+	<string>Quick help markdown examples</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>
