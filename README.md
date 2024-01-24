@@ -23,5 +23,4 @@ TLDR: If you just want to install the Xcode snippets onto your dev machine:
 
 For an understanding of what this tool can do, invoke the `--help` page:
 
-<img src="https://github.com/hatch-mobile/CodeSnippets/assets/2229408/da83562c-2aa2-4e7c-831f-ea050779df5c" width="75%">
-
+<img src="https://github.com/hatch-mobile/CodeSnippets/assets/2229408/6821dbd4-88f2-4a10-aab2-9f6df1deec15" width="75%">
