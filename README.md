@@ -22,6 +22,12 @@ TLDR: If you just want to install the Xcode snippets onto your dev machine:
 ```
 
 For an understanding of what this tool can do, invoke the `--help` page:
+
+![Code_20240124124216@2x](https://github.com/hatch-mobile/CodeSnippets/assets/2229408/da83562c-2aa2-4e7c-831f-ea050779df5c)
+
+<img src="https://github.com/hatch-mobile/CodeSnippets/assets/2229408/da83562c-2aa2-4e7c-831f-ea050779df5c" width="50%">
+
+
 ```
 This script will install/backup code snippets from IDEs (Xcode, VSCode).
 
