@@ -28,6 +28,13 @@ For an understanding of what this tool can do, invoke the `--help` page:
 
 ### Assets
 
+Example: List snippets that are available to install
+
 <img src="https://github.com/hatch-mobile/CodeSnippets/assets/2229408/42248de6-07db-4cad-9f37-695c018049a9" width="75%">
 
-<img src="https://github.com/hatch-mobile/CodeSnippets/assets/2229408/ec58ef7c-496e-479f-bec4-cb8cf7c5f767" width="75%">
+--- 
+
+Example: Installing snippets for Xcode
+
+<img src="https://github.com/hatch-mobile/CodeSnippets/assets/2229408/5fb386f4-bacf-4bd6-a0a9-bdfe1f6b9aa4" width="75%">
+
