@@ -286,41 +286,73 @@ logdStdErr "SCRIPT_NAME: $SCRIPT_NAME"
 SCRIPT_DIR=$(realpath "$(dirname "$0")")
 logdStdErr "SCRIPT_DIR: $SCRIPT_DIR"
 
-XCODE_SNIPPETS_DIR="$HOME/Library/Developer/Xcode/UserData/CodeSnippets"
-logdStdErr "XCODE_SNIPPETS_DIR: $XCODE_SNIPPETS_DIR"
-
-VSCODE_SNIPPETS_DIR="$HOME/Library/Application Support/Code/User/snippets"
-logdStdErr "VSCODE_SNIPPETS_DIR: $VSCODE_SNIPPETS_DIR"
-
-# TODO: zakkhoyt. Check if dirs exist before using them
-
-XCODE_REPO_DIR="$SCRIPT_DIR/snippets/xcode"
-logdStdErr "XCODE_REPO_DIR: $XCODE_REPO_DIR"
-
-VSCODE_REPO_DIR="$SCRIPT_DIR/snippets/vscode"
-logdStdErr "VSCODE_REPO_DIR: $VSCODE_REPO_DIR"
-
+# Only snippet files with this prefix will be copied. 
 TEAM_PREFIX="hatch_"
 logdStdErr "TEAM_PREFIX: $TEAM_PREFIX"
 
+# Path to xcode snippets in this repo
+XCODE_REPO_DIR="$SCRIPT_DIR/snippets/xcode"
+logdStdErr "XCODE_REPO_DIR: $XCODE_REPO_DIR"
+
+# Path to vscode snippets in this repo
+VSCODE_REPO_DIR="$SCRIPT_DIR/snippets/vscode"
+logdStdErr "VSCODE_REPO_DIR: $VSCODE_REPO_DIR"
+
+# Path to xcode snippets on the client machine
+XCODE_SNIPPETS_DIR="$HOME/Library/Developer/Xcode/UserData/CodeSnippets"
+logdStdErr "XCODE_SNIPPETS_DIR: $XCODE_SNIPPETS_DIR"
+
+# Path to vscode snippets on the client machine
+VSCODE_SNIPPETS_DIR="$HOME/Library/Application Support/Code/User/snippets"
+logdStdErr "VSCODE_SNIPPETS_DIR: $VSCODE_SNIPPETS_DIR"
+
+
+unset -v CLIENT_SNIPPETS_DIR
+unset -v REPO_SNIPPETS_DIR
+declare -a SNIPPET_EXTENSIONS
+if [[ "$HATCH_IDE" == 'xcode' ]]; then
+  REPO_SNIPPETS_DIR="$XCODE_REPO_DIR"
+  CLIENT_SNIPPETS_DIR="$XCODE_SNIPPETS_DIR"
+  SNIPPET_EXTENSIONS=("codesnippet")
+elif [[ "$HATCH_IDE" == 'vscode' ]]; then  
+  REPO_SNIPPETS_DIR="$VSCODE_REPO_DIR"
+  CLIENT_SNIPPETS_DIR="$VSCODE_SNIPPETS_DIR"
+  TEAM_PREFIX=""
+  SNIPPET_EXTENSIONS=("code-snippets" "json")
+fi
+
+# Check if dirs exist before using them
+if [[ -d "$REPO_SNIPPETS_DIR" ]]; then 
+  logdStdErr "  REPO_SNIPPETS_DIR was located: $REPO_SNIPPETS_DIR"
+else
+  logdStdErr "  [ERROR] REPO_SNIPPETS_DIR was not found: $REPO_SNIPPETS_DIR"
+  exit 10
+fi
+if [[ -d "$CLIENT_SNIPPETS_DIR" ]]; then 
+  logdStdErr "  CLIENT_SNIPPETS_DIR was located: $CLIENT_SNIPPETS_DIR"
+else
+  logdStdErr "  [ERROR] CLIENT_SNIPPETS_DIR was not found: $CLIENT_SNIPPETS_DIR"
+  exit 11
+fi
 
 if [[ "$HATCH_MODE" == 'list' ]]; then
-  if [[ "$HATCH_IDE" == 'xcode' ]]; then
-    ls -1 "$XCODE_REPO_DIR"
-  elif [[ "$HATCH_IDE" == 'vscode' ]]; then  
-    ls -1 "$VSCODE_REPO_DIR"
-  fi
+  # if [[ "$HATCH_IDE" == 'xcode' ]]; then
+  #   ls -1 "$XCODE_REPO_DIR"
+  # elif [[ "$HATCH_IDE" == 'vscode' ]]; then  
+  #   ls -1 "$VSCODE_REPO_DIR"
+  # fi
+  ls -1 "$REPO_SNIPPETS_DIR"
 elif [[ "$HATCH_MODE" == 'install' ]]; then
-
-  
   # TODO: zakkhoyt. Backup any existing 'hatch' files before overwriting them
-  if [[ "$HATCH_IDE" == 'xcode' ]]; then
-    logdStdErr "Installing xcode snippets..."
-    cp "$XCODE_REPO_DIR"/* "$XCODE_SNIPPETS_DIR"
-  elif [[ "$HATCH_IDE" == 'vscode' ]]; then  
-    logdStdErr "Installing vscode snippets..."
-    cp "$VSCODE_REPO_DIR"/* "$VSCODE_SNIPPETS_DIR"
-  fi
+  # if [[ "$HATCH_IDE" == 'xcode' ]]; then
+  #   logdStdErr "Installing xcode snippets..."
+  #   cp "$XCODE_REPO_DIR"/* "$XCODE_SNIPPETS_DIR"
+  # elif [[ "$HATCH_IDE" == 'vscode' ]]; then  
+  #   logdStdErr "Installing vscode snippets..."
+  #   cp "$VSCODE_REPO_DIR"/* "$VSCODE_SNIPPETS_DIR"
+  # fi
+  logdStdErr "Installing ${HATCH_IDE} snippets..."
+  cp "$REPO_SNIPPETS_DIR"/* "$CLIENT_SNIPPETS_DIR"
 elif [[ "$HATCH_MODE" == 'backup' ]]; then
   CURRENT_BRANCH=$(git branch | grep -E "^\*" | sed -E 's/\* //g')
   if [[ "$CURRENT_BRANCH" == 'main' ]]; then
@@ -332,18 +364,28 @@ elif [[ "$HATCH_MODE" == 'backup' ]]; then
     fi
   fi
   
-  if [[ "$HATCH_IDE" == 'xcode' ]]; then
-    # TODO: zakkhoyt. only back up those with prefix "hatch"
-    
-    logdStdErr "Backing up xcode snippets..."
-    cp "${XCODE_SNIPPETS_DIR}/${TEAM_PREFIX}*.codesnippet" "$XCODE_REPO_DIR"
-    log "Did back up xcode snippets."
-  elif [[ "$HATCH_IDE" == 'vscode' ]]; then  
-    logdStdErr "Backing up vscode snippets..."
-    cp "$VSCODE_SNIPPETS_DIR"/* "$VSCODE_REPO_DIR"
-    log "Did back up vscode snippets."
-  fi
+  # if [[ "$HATCH_IDE" == 'xcode' ]]; then
+  #   logdStdErr "Backing up xcode snippets with prefix '$TEAM_PREFIX'..."
+  #   cp "${XCODE_SNIPPETS_DIR}/${TEAM_PREFIX}"*.codesnippet "$XCODE_REPO_DIR"
+  #   log "Did back up xcode snippets."
+  # elif [[ "$HATCH_IDE" == 'vscode' ]]; then  
+  #   logdStdErr "Backing up vscode snippets with prefix '$TEAM_PREFIX'..."
+  #   cp "${VSCODE_SNIPPETS_DIR}/${TEAM_PREFIX}"*.json "$XCODE_REPO_DIR"
+  #   cp "${VSCODE_SNIPPETS_DIR}/${TEAM_PREFIX}"*.code-snippets "$XCODE_REPO_DIR"
+  #   log "Did back up vscode snippets."
+  # fi
+
+  # logdStdErr "Backing up ${HATCH_IDE} snippets with prefix '${TEAM_PREFIX}'..."
+  # cp "${CLIENT_SNIPPETS_DIR}/${TEAM_PREFIX}"*.json "${REPO_SNIPPETS_DIR}"
+  # cp "${CLIENT_SNIPPETS_DIR}/${TEAM_PREFIX}"*.code-snippets "${REPO_SNIPPETS_DIR}"
+  for SNIPPET_EXTENSION in "${SNIPPET_EXTENSIONS[@]}"; do
+    logdStdErr "Backing up ${HATCH_IDE} snippets with prefix '${TEAM_PREFIX}' and extension '${SNIPPET_EXTENSION}'..."
+    set -x
+    cp "${CLIENT_SNIPPETS_DIR}/${TEAM_PREFIX}"*."${SNIPPET_EXTENSION}" "${REPO_SNIPPETS_DIR}"
+    set +x
+  done
+  # log "Did back up vscode snippets."
 else 
-  logStdErr "[ERROR] Unhandle value for HATCH_MODE: $HATCH_MODE"
+  logStdErr "[ERROR] Unhandle value for HATCH_MODE: ${HATCH_MODE}"
   exit 1
 fi

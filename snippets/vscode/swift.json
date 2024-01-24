@@ -13,47 +13,47 @@
 	// 	"description": "Log output to console"
 	// }
 
-	"// TODO: zakkhoyt - \\(message)": {
+	"// TODO: username - \\(message)": {
 		"prefix": [
 			"__tozc",
 			"//tozc",
 			".tozc"
 		],
 		"body": [
-			"# TODO: zakkhoyt. $1",
+			"# TODO: ${10:username} - ${20:message}",
 			"$0"
 		]
 	},
-	"#warning(\"TODO: zakkhoyt - \\(message)\")": {
+	"#warning(\"TODO: username - \\(message)\")": {
 		"prefix": [
 			"__tozw",
 			"//tozw",
 			".tozw"
 		],
 		"body": [
-			"#warning(\"FIXME: zakkhoyt - ${1:message}\")",
+			"#warning(\"FIXME: ${10:username} - ${20:message}\")",
 			"$0"
 		]
 	},
-	"// FIXME: zakkhoyt - \\(message)": {
+	"// FIXME: username - \\(message)": {
 		"prefix": [
 			"__fizc",
 			"//fizc",
 			".fizc"
 		],
 		"body": [
-			"# FIXME: zakkhoyt. $1",
+			"# FIXME: ${10:username} - ${20:message}",
 			"$0"
 		]
 	},
-	"#warning(\"FIXME: zakkhoyt - \\(message)\")": {
+	"#warning(\"FIXME: username - \\(message)\")": {
 		"prefix": [
 			"__fizw",
 			"//fizw",
 			".fizw"
 		],
 		"body": [
-			"#warning(\"FIXME: zakkhoyt - ${1:message}\")",
+			"#warning(\"FIXME: ${10:username} - ${20:message}\")",
 			"$0"
 		]
 	},
@@ -66,9 +66,9 @@
 			".qchsd"
 		],
 		"body": [
-			"/// **Jira**",
+			"/// ## Jira",
 			"///",
-			"/// [HSD-${1:NNNN}](https://hatchbaby.atlassian.net/browse/HSD-${1:NNNN})",
+			"/// * [HSD-${1:NNNN}](https://hatchbaby.atlassian.net/browse/HSD-${1:NNNN})",
 			"///",
 			"$0"
 		]
@@ -82,30 +82,33 @@
 			".qcfile"
 		],
 		"body": [
-			"/// **LocalFile**",
+			"/// ## LocalFile",
 			"///",
-			"/// [${1:filename}](${2:filepath})",
+			"/// * [${1:filename}](${2:filepath})",
 			"///",
 			"$0"
 		]
 	},
-	"Quick Comment See Also": {
+	"Quick Comment References": {
 		"scope": "c,cpp,swift",
 		"description": "A quick comment for Local File",
 		"prefix": [
 			"__qcurl",
 			"//qcurl",
-			".qcurl"
+			".qcurl",
+			"__qcref",
+			"//qcref",
+			".qcref"
 		],
 		"body": [
-			"/// **SeeAlso**",
+			"/// ## References",
 			"///",
-			"/// [${1:name}](${2:url})",
+			"/// * [${1:name}](${2:url})",
 			"///",
 			"$0"
 		]
 	},
-	"Quick Comment See Also": {
+	"Quick Comment all Callouts": {
 		"scope": "c,cpp,swift",
 		"description": "A quick comment for Local File",
 		"prefix": [
@@ -115,6 +118,9 @@
 		],
 		"body": [
 			"/// ${10:Summary}",
+			"///",
+			"/// ${11:Description}",
+			"///",
 			"/// - Attention: Who|What",
 			"/// - Authors: ${20:@user}",
 			"/// - Bug: ${30:Describe}",
@@ -138,22 +144,5 @@
 			"/// - Warning: ${210:Describe}",
 			"$0"
 		]
-	},
-
-	// "reminder": {
-	// 	"scope": "c,cpp,swift",
-	// 	"description": "A tag/reminder comment (w/username, category, message, url)",
-	// 	"prefix": [
-	// 		".fixme",
-	// 		".todo",
-	// 		".idea",
-	// 		"//fixme",
-	// 		"//todo",
-	// 		"//idea"
-	// 	],
-	// 	"body": [
-	// 		"// ${10:${11:FIXME}${12:TODO}${13:IDEA}}: ${21:zakkhoyt}.${30: [${31:<category>}]}${40: ${41:<message>}.}${50: Link: ${51:<URL>}}",
-	// 		"$0"
-	// 	]
-	// },
+	}
 }

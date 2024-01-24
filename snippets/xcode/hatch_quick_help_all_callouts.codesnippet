@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>__</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>/// &lt;#Summary#&gt;
+///
+/// &lt;#Description#&gt;
+///
+/// - Attention: Who|What
+/// - Authors: &lt;#@user#&gt;
+/// - Bug: &lt;#Describe#&gt;
+/// - Complexity: &lt;#`O(n^3)`#&gt;
+/// - Copyright: &lt;#Date#&gt;
+/// - Date: &lt;#Date#&gt;
+/// - Experiment: &lt;#Describe#&gt;
+/// - Important: &lt;#Describe#&gt;
+/// - Invariant: &lt;#Describe what doesn't change.#&gt;
+/// - Note: &lt;#Content#&gt;
+/// - Parameter &lt;#Name#&gt;: `&lt;#Type#&gt;` &lt;#Describe#&gt;
+/// - Postcondition: &lt;#Describe#&gt;
+/// - Precondition: &lt;#Describe#&gt;
+/// - Remark: &lt;#Describe#&gt;
+/// - Requires: &lt;#Describe#&gt;
+/// - Returns: &lt;#Describe#&gt;
+/// - SeeAlso: &lt;#Thing to See#&gt;
+/// - SeeAlso: `&lt;#Inline Code#&gt;`
+/// - SeeAlso: ``&lt;#DocC Reference#&gt;``
+/// - SeeAlso: [&lt;#Title#&gt;](&lt;#URL#&gt;)
+/// - Since: &lt;#Introduced When#&gt;
+/// - Throws: &lt;#Describe#&gt; `&lt;#Type#&gt;`
+/// - ToDo: &lt;#Describe#&gt;
+/// - Version: &lt;#Describe#&gt;
+/// - Warning: &lt;#Describe#&gt;</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>D56E0047-02AC-4F8B-A0B9-3DC5C0E3D1BC</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetSummary</key>
+	<string></string>
+	<key>IDECodeSnippetTitle</key>
+	<string>My Code Snippet</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>

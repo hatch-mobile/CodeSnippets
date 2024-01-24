@@ -32,37 +32,4 @@
 			"$0"
 		]
 	}
-
-	// See ~/Library/Application Support/Code/User/snippets/snippets-global.code-snippets for global snippets
-
-	// "FIXME: {username} [{category}] {note}.": {
-	// 	"description": "A FIXME comment for python (w/username, category, note)",
-	// 	"prefix": [
-	// 		".fixme"
-	// 	],
-	// 	"body": [
-	// 		"# FIXME: ${1:zakkhoyt}.${2:< [${3:category}]>} ${4:<note>}.",
-	// 		"$0"
-	// 	]
-	// },
-	// "TODO: {username} [{category}] {note}.": {
-	// 	"description": "A TODO comment for python (w/username, category, note)",
-	// 	"prefix": [
-	// 		".todo"
-	// 	],
-	// 	"body": [
-	// 		"# TODO: ${1:zakkhoyt}.${2:< [${3:category}]>} ${4:<note>}.",
-	// 		"$0"
-	// 	]
-	// },
-	// "NOTE: {username} [{category}] {note}.": {
-	// 	"description": "A NOTE comment for python (w/username, category, note)",
-	// 	"prefix": [
-	// 		".note"
-	// 	],
-	// 	"body": [
-	// 		"# NOTE: ${1:zakkhoyt}.${2:< [${3:category}]>} ${4:<note>}.",
-	// 		"$0"
-	// 	]
-	// }
 }

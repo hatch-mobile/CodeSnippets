@@ -1,28 +1,28 @@
 {
-	"FIXME: zakkhoyt. <message>": {
-		"scope": "shellscript,python,yaml",
+	"FIXME: username - <message>": {
+		"scope": "shellscript,python,yaml,ruby",
 		"prefix": [
 			"#fiz",
 			".fiz"
 		],
 		"body": [
-			"# FIXME: zakkhoyt. $1",
+			"# FIXME: ${10:username} - ${20:message}",
 			"$0"
 		]
 	},
-	"TODO: zakkhoyt. <message>": {
-		"scope": "shellscript,python,yaml",
+	"TODO: username - <message>": {
+		"scope": "shellscript,python,yaml,ruby",
 		"prefix": [
 			"#todoz",
 			".todoz"
 		],
 		"body": [
-			"# TODO: zakkhoyt. $1",
+			"# TODO: ${10:username} - ${20:message}",
 			"$0"
 		]
 	},
-	"# TODO: zakkhoyt [{category}] {note}. Link: {url}": {
-		"scope": "shellscript,python,yaml",
+	"# TODO: username [{category}] {note} - Link: {url}": {
+		"scope": "shellscript,python,yaml,ruby",
 		"description": "A tag/reminder comment (w/username, category, message, url)",
 		"prefix": [
 			"#fixme",
@@ -30,24 +30,8 @@
 			"#idea"
 		],
 		"body": [
-			"# ${10:${11:FIXME}${12:TODO}${13:IDEA}}: ${21:zakkhoyt}.${30: [${31:<category>}]}${40: ${41:<message>}.}${50: Link: ${51:<URL>}}",
+			"# ${10:${11:FIXME}${12:TODO}${13:IDEA}}: ${21:username} - ${30: [${31:<category>}]}${40: ${41:<message>}.}${50: Link: ${51:<URL>}}",
 			"$0"
 		]
-	},
-	// "Swift commments": {
-	// 	"scope": "c,cpp,swift",
-	// 	"description": "A tag/reminder comment (w/username, category, message, url)",
-	// 	"prefix": [
-	// 		".fixme",
-	// 		".todo",
-	// 		".idea",
-	// 		"//fixme",
-	// 		"//todo",
-	// 		"//idea"
-	// 	],
-	// 	"body": [
-	// 		"// ${10:${11:FIXME}${12:TODO}${13:IDEA}}: ${21:zakkhoyt}.${30: [${31:<category>}]}${40: ${41:<message>}.}${50: Link: ${51:<URL>}}",
-	// 		"$0"
-	// 	]
-	// }
+	}
 }

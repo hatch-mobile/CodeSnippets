@@ -13,123 +13,6 @@
 	// 	"description": "Log output to console"
 	// }
 
-
-	// Place your global snippets here. Each snippet is defined under a snippet name and has a scope, prefix, body and 
-	// description. Add comma separated ids of the languages where the snippet is applicable in the scope field. If scope 
-	// is left empty or omitted, the snippet gets applied to all languages. The prefix is what is 
-	// used to trigger the snippet and the body will be expanded and inserted. Possible variables are: 
-	// $1, $2 for tab stops, $0 for the final cursor position, and ${1:label}, ${2:another} for placeholders. 
-	// Placeholders with the same ids are connected.
-	// Example:
-	// "Print to console": {
-	// 	"scope": "javascript,typescript",
-	// 	"prefix": "log",
-	// 	"body": [
-	// 		"console.log('$1');",
-	// 		"$2"
-	// 	],
-	// 	"description": "Log output to console"
-	// }
-	
-	"markdowns code snippet": {
-		"description": "A Markdown code block for Markdown",
-		"prefix": [
-			"```md",
-			"_md",
-			".md",
-			"```markdown",
-			"_markdown",
-			".markdown"
-		],
-		"body": [
-			"```md",
-			"$0${1:}",
-			"```"
-		]
-	},
-	"python code snippet": {
-		"description": "A python code block for Markdown",
-		"prefix": [
-			"```python",
-			"_python",
-			".python"
-		],
-		"body": [
-			"```python",
-			"$0${1:some code}",
-			"```"
-		]
-	},
-	"Ruby code snippet": {
-		"description": "A ruby code block for Markdown",
-		"prefix": [
-			"```ruby",
-			"_ruby",
-			".ruby"
-		],
-		"body": [
-			"```ruby",
-			"$0${1:some code}",
-			"```"
-		]
-	},
-	"shell code snippet": {
-		"description": "A shell code block for Markdown",
-		"prefix": [
-			"```sh",
-			"_sh",
-			".sh"
-		],
-		"body": [
-			"```sh",
-			"$0${1:some code}",
-			"```"
-		]
-	},
-	"swift code snippet": {
-		"description": "A swift code block for Markdown",
-		"prefix": [
-			"```swift",
-			"_swift",
-			".swift"
-		],
-		"body": [
-			"```swift",
-			"$0${1:some code}",
-			"```"
-		]
-	},
-	"lua code snippet": {
-		"description": "A lua code block for Markdown",
-		"prefix": [
-			"```lua",
-			"_lua",
-			".lua"
-		],
-		"body": [
-			"```lua",
-			"$0${1:some code}",
-			"```"
-		]
-	},
-	"regex code snippet": {
-		"description": "A regex code block for Markdown",
-		"prefix": [
-			"```regex",
-			"_regex",
-			".regex"
-		],
-		"body": [
-			"### Regex Find",
-			"```re",
-			"${1:regex}",
-			"```",
-			"### Regex Replace (${2:Application})",
-			"```re",
-			"${3:replace}",
-			"```"
-		]
-	},
 	"html.img -> markdown.image": {
 		"description": "An image block for embedding in Markdown",
 		"prefix": [
@@ -139,7 +22,6 @@
 		],
 		"body": [
 			"<img src=\"${1:URL}\" width=\"${2:50%}\">$0"
-		],
-		// "scope": "html,markdown,markdownDescription,defaultText"
+		]
 	}
 }
