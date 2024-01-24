@@ -294,12 +294,15 @@ logdStdErr "VSCODE_SNIPPETS_DIR: $VSCODE_SNIPPETS_DIR"
 
 # TODO: zakkhoyt. Check if dirs exist before using them
 
-
 XCODE_REPO_DIR="$SCRIPT_DIR/snippets/xcode"
 logdStdErr "XCODE_REPO_DIR: $XCODE_REPO_DIR"
 
 VSCODE_REPO_DIR="$SCRIPT_DIR/snippets/vscode"
 logdStdErr "VSCODE_REPO_DIR: $VSCODE_REPO_DIR"
+
+TEAM_PREFIX="hatch_"
+logdStdErr "TEAM_PREFIX: $TEAM_PREFIX"
+
 
 if [[ "$HATCH_MODE" == 'list' ]]; then
   if [[ "$HATCH_IDE" == 'xcode' ]]; then
@@ -308,7 +311,9 @@ if [[ "$HATCH_MODE" == 'list' ]]; then
     ls -1 "$VSCODE_REPO_DIR"
   fi
 elif [[ "$HATCH_MODE" == 'install' ]]; then
-  # TODO: zakkhoyt. Backup any existing files before overwriting them
+
+  
+  # TODO: zakkhoyt. Backup any existing 'hatch' files before overwriting them
   if [[ "$HATCH_IDE" == 'xcode' ]]; then
     logdStdErr "Installing xcode snippets..."
     cp "$XCODE_REPO_DIR"/* "$XCODE_SNIPPETS_DIR"
@@ -328,8 +333,10 @@ elif [[ "$HATCH_MODE" == 'backup' ]]; then
   fi
   
   if [[ "$HATCH_IDE" == 'xcode' ]]; then
+    # TODO: zakkhoyt. only back up those with prefix "hatch"
+    
     logdStdErr "Backing up xcode snippets..."
-    cp "$XCODE_SNIPPETS_DIR"/* "$XCODE_REPO_DIR"
+    cp "${XCODE_SNIPPETS_DIR}/${TEAM_PREFIX}*.codesnippet" "$XCODE_REPO_DIR"
     log "Did back up xcode snippets."
   elif [[ "$HATCH_IDE" == 'vscode' ]]; then  
     logdStdErr "Backing up vscode snippets..."
