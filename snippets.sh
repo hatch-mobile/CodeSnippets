@@ -330,7 +330,13 @@ fi
 # TODO: zakkhoyt. Sync the snippet filename and name IN the file (for xcode)
 
 if [[ "$MODE" == 'list' ]]; then
-  find "$REPO_SNIPPETS_DIR" | sed "s|$SCRIPT_DIR|.|g"
+  logStdErr "Available snippets: ($REPO_SNIPPETS_DIR)"
+  logStdErr ""
+  find "$REPO_SNIPPETS_DIR" | sed "s|$REPO_SNIPPETS_DIR|.|g" | grep -Ev '^.$' | grep -v 'DS_Store'
+  logStdErr ""
+  logStdErr "Installed snippets: ($CLIENT_SNIPPETS_DIR)"
+  logStdErr ""
+  find "$CLIENT_SNIPPETS_DIR" | sed "s|$CLIENT_SNIPPETS_DIR|.|g" | grep -Ev '^.$' | grep -v 'DS_Store'
 elif [[ "$MODE" == 'install' ]]; then
   # Backup all existing snippets before overwriting them
   TIMESTAMP=$(date +%Y%m%d%H%M%S)
