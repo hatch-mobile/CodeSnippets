@@ -48,16 +48,6 @@
 
 # -------- END META NOTES --------
 
-# ---- Look for our debug argument first thing (other args processed after bootstrapping).
-
-# unset -v IS_DEBUG
-# for i in "$@"; do
-#   if [ "$i" == "--debug" ] ; then
-#     echo "----- Found"
-#     IS_DEBUG="true"
-#   fi
-# done
-
 # ---- Set up our logging functions
 
 # Writes to stdout always
