@@ -9,7 +9,7 @@
 		<string>All</string>
 	</array>
 	<key>IDECodeSnippetContents</key>
-	<string>// FIXME: &lt;#usernam#&gt; - &lt;#message#&gt;</string>
+	<string>// FIXME: &lt;#username#&gt; - &lt;#message#&gt;</string>
 	<key>IDECodeSnippetIdentifier</key>
 	<string>51F76792-DBC7-4190-9D86-68D2D1E10D54</string>
 	<key>IDECodeSnippetLanguage</key>
@@ -17,7 +17,7 @@
 	<key>IDECodeSnippetSummary</key>
 	<string></string>
 	<key>IDECodeSnippetTitle</key>
-	<string>// FIXME: &lt;#usernam#&gt; - &lt;#message#&gt;</string>
+	<string>// FIXME: &lt;#username#&gt; - &lt;#message#&gt;</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>

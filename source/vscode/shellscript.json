@@ -87,44 +87,7 @@
 			"#varbw"
 		],
 		"body": [
-			"${10:<prefix>}${${20:<var_name>}}${10:<suffix>}$0",
+			"${10:<prefix>}${${20:<var_name>}}${10:<suffix>}$0"
 		]
-	},
-	// "FIXME: {username} [{category}] {note}. Link: {url}": {
-	// 	"description": "A FIXME comment for shell scripts (w/username, category, message, url)",
-	// 	"prefix": [
-	// 		".fixme", 
-	// 		"#fixme"
-	// 	],
-	// 	"body": [
-	// 		"# FIXME: ${21:zakkhoyt}.${30: [${31:<category>}]}${40: ${41:<message>}.}${50: Link: ${51:<URL>}}",
-	// 		"$0"
-	// 	]
-	// },
-	// "TODO: {username} [{category}] {note}. Link: {url}": {
-	// 	"description": "A TODO comment for shell scripts (w/username, category, message, url)",
-	// 	"prefix": [
-	// 		".todo", 
-	// 		"#todo"
-	// 	],
-	// 	"body": [
-	// 		"# TODO: ${21:zakkhoyt}.${30: [${31:<category>}]}${40: ${41:<message>}.}${50: Link: ${51:<URL>}}",
-	// 		"$0"
-	// 	]
-	// },
-	// "TAG: {username} [{category}] {note}. Link: {url}": {
-	// 	"description": "A reminder comment for shell scripts (w/username, category, message, url)",
-	// 	"prefix": [
-	// 		".alert",
-	// 		".block",
-	// 		".remind",
-	// 		".tag"
-	// 	],
-	// 	"body": [
-	// 		// "# ${10:${11:FIXME}${12:TODO}${13:IDEA}}:${20: ${21:<username>}.}${30: [${31:<category>}]}${40: ${41:<message>}.}${50: Link: ${51:<URL>}}",
-	// 		"# ${10:${11:FIXME}${12:TODO}${13:IDEA}}: ${21:zakkhoyt}.${30: [${31:<category>}]}${40: ${41:<message>}.}${50: Link: ${51:<URL>}}",
-	// 		"$0"
-	// 	]
-	// }
-
+	}
 }

@@ -9,7 +9,7 @@
 		<string>All</string>
 	</array>
 	<key>IDECodeSnippetContents</key>
-	<string>#warning("TODO: &lt;#usernam#&gt; - ")</string>
+	<string>#warning("TODO: &lt;#username#&gt; - ")</string>
 	<key>IDECodeSnippetIdentifier</key>
 	<string>B5DA313B-9CEC-4CFD-A912-479BE93834C9</string>
 	<key>IDECodeSnippetLanguage</key>
@@ -17,7 +17,7 @@
 	<key>IDECodeSnippetSummary</key>
 	<string></string>
 	<key>IDECodeSnippetTitle</key>
-	<string>#warning("TODO: &lt;#usernam#&gt; - ")</string>
+	<string>#warning("TODO: &lt;#username#&gt; - ")</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>

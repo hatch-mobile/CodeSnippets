@@ -244,23 +244,9 @@ while [[ $# -gt 0 ]]; do
       fi
       ;;
     *)
-      # If begins with a single or double dash
-      echo "$1" | grep -E "^-{1,2}" > /dev/null
-      RVAL=$?
-      if [[ "$RVAL" -eq 0 ]]; then 
-        logStdErr "[ERROR] Found unsupported argument: $1"
-        hatch_log -c -d "[ERROR] Found unsupported argument: $1"
-        logStdErr ""
-        # printUsage
-      else
-        # Unhandled value
-        logStdErr "[ERROR] Found unsupported value: $1"
-        logStdErr ""
-        # printUsage
-      fi
-
-      # FIXME: zakkhoyt. Restore this
-      # exit 1
+      logStdErr "[ERROR] Found unsupported argument: $1"
+      printUsage
+      exit 1
       ;;
   esac
   shift 1
@@ -334,13 +320,14 @@ else
   logdStdErr "  [ERROR] CLIENT_SNIPPETS_DIR was not found: $CLIENT_SNIPPETS_DIR"
   exit 11
 fi
+# TODO: zakkhoyt. Sync the snippet filename and name IN the file (for xcode)
 
 if [[ "$MODE" == 'list' ]]; then
   find "$REPO_SNIPPETS_DIR" | sed "s|$SCRIPT_DIR|.|g"
 elif [[ "$MODE" == 'install' ]]; then
-  # TODO: zakkhoyt. Backup any existing 'hatch' files before overwriting them
-  logdStdErr "Installing ${IDE} snippets..."
+  # TODO: zakkhoyt. Backup all existing snippets before overwriting them
   cp "$REPO_SNIPPETS_DIR"/* "$CLIENT_SNIPPETS_DIR"
+  logdStdErr "Did install ${IDE} snippets"
 elif [[ "$MODE" == 'backup' ]]; then
   CURRENT_BRANCH=$(git branch | grep -E "^\*" | sed -E 's/\* //g')
   if [[ "$CURRENT_BRANCH" == 'main' ]]; then
@@ -351,6 +338,7 @@ elif [[ "$MODE" == 'backup' ]]; then
       exit 2
     fi
   fi
+  
   for SNIPPET_EXTENSION in "${SNIPPET_EXTENSIONS[@]}"; do
     logdStdErr "Backing up ${IDE} snippets with prefix '${TEAM_PREFIX}' and extension '${SNIPPET_EXTENSION}'..."
     set -x
