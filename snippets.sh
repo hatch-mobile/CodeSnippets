@@ -128,6 +128,7 @@ printUsage () {
 
 # Ensure our globals are cleared before populating with args
 unset -v IS_DEBUG
+unset -v IS_ADMIN
 unset -v LIST_AUTHORS
 unset -v HATCH_TYPE
 
@@ -215,6 +216,12 @@ while [[ $# -gt 0 ]]; do
       # This arg was processed at the top of the script, so not much to do in this case.
       logdStdErr "Found $1 arg"
       IS_DEBUG="$1"
+      ;;
+    --admin)
+      # Looks for presence of --admin
+      # This arg was processed at the top of the script, so not much to do in this case.
+      logdStdErr "Found $1 arg"
+      IS_ADMIN="$1"
       ;;
     --mode*)
       HATCH_MODE=$(parse_key_value_argument "--mode" "${@}")
@@ -310,6 +317,16 @@ elif [[ "$HATCH_MODE" == 'install' ]]; then
     cp "$VSCODE_REPO_DIR"/* "$VSCODE_SNIPPETS_DIR"
   fi
 elif [[ "$HATCH_MODE" == 'backup' ]]; then
+  CURRENT_BRANCH=$(git branch | grep -E "^\*" | sed -E 's/\* //g')
+  if [[ "$CURRENT_BRANCH" == 'main' ]]; then
+    if [[ -n "$IS_ADMIN" ]]; then 
+      logStdErr "[WARNING] Backng up to protected branch ('main')"
+    else 
+      logStdErr "[ERROR] Cannot back up to 'main' branch. Create a working branch then try again."
+      exit 2
+    fi
+  fi
+  
   if [[ "$HATCH_IDE" == 'xcode' ]]; then
     logdStdErr "Backing up xcode snippets..."
     cp "$XCODE_SNIPPETS_DIR"/* "$XCODE_REPO_DIR"
@@ -321,5 +338,5 @@ elif [[ "$HATCH_MODE" == 'backup' ]]; then
   fi
 else 
   logStdErr "[ERROR] Unhandle value for HATCH_MODE: $HATCH_MODE"
-  return 1
+  exit 1
 fi
