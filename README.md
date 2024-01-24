@@ -11,7 +11,7 @@ cd CodeSnippets
 ```
 
 ## Usage 
-```sh
+```
 This script will install/backup code snippets from IDEs (Xcode, VSCode).
 
 Usage:
