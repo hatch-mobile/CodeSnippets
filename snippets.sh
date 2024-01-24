@@ -130,7 +130,7 @@ printUsage () {
 unset -v IS_DEBUG
 unset -v IS_ADMIN
 unset -v LIST_AUTHORS
-unset -v HATCH_TYPE
+unset -v TYPE
 
 # TODO: zakkhoyt. Consider returning a delimited string like echo_ansi's extract_cursor_direction
 # Parses script arguments which take the form of:
@@ -224,20 +224,20 @@ while [[ $# -gt 0 ]]; do
       IS_ADMIN="$1"
       ;;
     --mode*)
-      HATCH_MODE=$(parse_key_value_argument "--mode" "${@}")
+      MODE=$(parse_key_value_argument "--mode" "${@}")
       shift $?
 
-      if [[ "$HATCH_MODE" != "list" && "$HATCH_MODE" != "install" && "$HATCH_MODE" != "backup" ]]; then
+      if [[ "$MODE" != "list" && "$MODE" != "install" && "$MODE" != "backup" ]]; then
         logStdErr "[ERROR] Invalid value for '$1': '$2'. Options are 'list', 'install', or 'backup'."
         printUsage
         exit 1
       fi
       ;;
     --ide*)
-      HATCH_IDE=$(parse_key_value_argument "--ide" "${@}")
+      IDE=$(parse_key_value_argument "--ide" "${@}")
       shift $?
 
-      if [[ "$HATCH_IDE" != "vscode" && "$HATCH_IDE" != "xcode" ]]; then
+      if [[ "$IDE" != "vscode" && "$IDE" != "xcode" ]]; then
         logStdErr "[ERROR] Invalid value for '$1': '$2'. Options are 'vscode' or 'xcode'."
         printUsage
         exit 1
@@ -268,13 +268,13 @@ done
 
 # ---- Validate that required args have been passed in.  
 
-# Writes to stderr including file/line if HATCH_MODE is not defined
+# Writes to stderr including file/line if MODE is not defined
 
-: "${HATCH_MODE:?[ERROR] An parameter is required for --mode. See --help for details.}"
-logd "HATCH_MODE: $HATCH_MODE"
+: "${MODE:?[ERROR] An parameter is required for --mode. See --help for details.}"
+logd "MODE: $MODE"
 
-: "${HATCH_IDE:?[ERROR] An parameter is required for --ide. See --help for details.}"
-logd "HATCH_IDE: $HATCH_IDE"
+: "${IDE:?[ERROR] An parameter is required for --ide. See --help for details.}"
+logd "IDE: $IDE"
 
 # ---- Script main work
 
@@ -291,11 +291,11 @@ TEAM_PREFIX="hatch_"
 logdStdErr "TEAM_PREFIX: $TEAM_PREFIX"
 
 # Path to xcode snippets in this repo
-XCODE_REPO_DIR="$SCRIPT_DIR/snippets/xcode"
+XCODE_REPO_DIR="$SCRIPT_DIR/source/xcode"
 logdStdErr "XCODE_REPO_DIR: $XCODE_REPO_DIR"
 
 # Path to vscode snippets in this repo
-VSCODE_REPO_DIR="$SCRIPT_DIR/snippets/vscode"
+VSCODE_REPO_DIR="$SCRIPT_DIR/source/vscode"
 logdStdErr "VSCODE_REPO_DIR: $VSCODE_REPO_DIR"
 
 # Path to xcode snippets on the client machine
@@ -310,11 +310,11 @@ logdStdErr "VSCODE_SNIPPETS_DIR: $VSCODE_SNIPPETS_DIR"
 unset -v CLIENT_SNIPPETS_DIR
 unset -v REPO_SNIPPETS_DIR
 declare -a SNIPPET_EXTENSIONS
-if [[ "$HATCH_IDE" == 'xcode' ]]; then
+if [[ "$IDE" == 'xcode' ]]; then
   REPO_SNIPPETS_DIR="$XCODE_REPO_DIR"
   CLIENT_SNIPPETS_DIR="$XCODE_SNIPPETS_DIR"
   SNIPPET_EXTENSIONS=("codesnippet")
-elif [[ "$HATCH_IDE" == 'vscode' ]]; then  
+elif [[ "$IDE" == 'vscode' ]]; then  
   REPO_SNIPPETS_DIR="$VSCODE_REPO_DIR"
   CLIENT_SNIPPETS_DIR="$VSCODE_SNIPPETS_DIR"
   TEAM_PREFIX=""
@@ -335,25 +335,13 @@ else
   exit 11
 fi
 
-if [[ "$HATCH_MODE" == 'list' ]]; then
-  # if [[ "$HATCH_IDE" == 'xcode' ]]; then
-  #   ls -1 "$XCODE_REPO_DIR"
-  # elif [[ "$HATCH_IDE" == 'vscode' ]]; then  
-  #   ls -1 "$VSCODE_REPO_DIR"
-  # fi
-  ls -1 "$REPO_SNIPPETS_DIR"
-elif [[ "$HATCH_MODE" == 'install' ]]; then
+if [[ "$MODE" == 'list' ]]; then
+  find "$REPO_SNIPPETS_DIR" | sed "s|$SCRIPT_DIR|.|g"
+elif [[ "$MODE" == 'install' ]]; then
   # TODO: zakkhoyt. Backup any existing 'hatch' files before overwriting them
-  # if [[ "$HATCH_IDE" == 'xcode' ]]; then
-  #   logdStdErr "Installing xcode snippets..."
-  #   cp "$XCODE_REPO_DIR"/* "$XCODE_SNIPPETS_DIR"
-  # elif [[ "$HATCH_IDE" == 'vscode' ]]; then  
-  #   logdStdErr "Installing vscode snippets..."
-  #   cp "$VSCODE_REPO_DIR"/* "$VSCODE_SNIPPETS_DIR"
-  # fi
-  logdStdErr "Installing ${HATCH_IDE} snippets..."
+  logdStdErr "Installing ${IDE} snippets..."
   cp "$REPO_SNIPPETS_DIR"/* "$CLIENT_SNIPPETS_DIR"
-elif [[ "$HATCH_MODE" == 'backup' ]]; then
+elif [[ "$MODE" == 'backup' ]]; then
   CURRENT_BRANCH=$(git branch | grep -E "^\*" | sed -E 's/\* //g')
   if [[ "$CURRENT_BRANCH" == 'main' ]]; then
     if [[ -n "$IS_ADMIN" ]]; then 
@@ -363,29 +351,14 @@ elif [[ "$HATCH_MODE" == 'backup' ]]; then
       exit 2
     fi
   fi
-  
-  # if [[ "$HATCH_IDE" == 'xcode' ]]; then
-  #   logdStdErr "Backing up xcode snippets with prefix '$TEAM_PREFIX'..."
-  #   cp "${XCODE_SNIPPETS_DIR}/${TEAM_PREFIX}"*.codesnippet "$XCODE_REPO_DIR"
-  #   log "Did back up xcode snippets."
-  # elif [[ "$HATCH_IDE" == 'vscode' ]]; then  
-  #   logdStdErr "Backing up vscode snippets with prefix '$TEAM_PREFIX'..."
-  #   cp "${VSCODE_SNIPPETS_DIR}/${TEAM_PREFIX}"*.json "$XCODE_REPO_DIR"
-  #   cp "${VSCODE_SNIPPETS_DIR}/${TEAM_PREFIX}"*.code-snippets "$XCODE_REPO_DIR"
-  #   log "Did back up vscode snippets."
-  # fi
-
-  # logdStdErr "Backing up ${HATCH_IDE} snippets with prefix '${TEAM_PREFIX}'..."
-  # cp "${CLIENT_SNIPPETS_DIR}/${TEAM_PREFIX}"*.json "${REPO_SNIPPETS_DIR}"
-  # cp "${CLIENT_SNIPPETS_DIR}/${TEAM_PREFIX}"*.code-snippets "${REPO_SNIPPETS_DIR}"
   for SNIPPET_EXTENSION in "${SNIPPET_EXTENSIONS[@]}"; do
-    logdStdErr "Backing up ${HATCH_IDE} snippets with prefix '${TEAM_PREFIX}' and extension '${SNIPPET_EXTENSION}'..."
+    logdStdErr "Backing up ${IDE} snippets with prefix '${TEAM_PREFIX}' and extension '${SNIPPET_EXTENSION}'..."
     set -x
     cp "${CLIENT_SNIPPETS_DIR}/${TEAM_PREFIX}"*."${SNIPPET_EXTENSION}" "${REPO_SNIPPETS_DIR}"
     set +x
   done
-  # log "Did back up vscode snippets."
+  log "Did back up ${IDE} snippets."
 else 
-  logStdErr "[ERROR] Unhandle value for HATCH_MODE: ${HATCH_MODE}"
+  logStdErr "[ERROR] Unhandle value for MODE: ${MODE}"
   exit 1
 fi
