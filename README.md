@@ -42,7 +42,6 @@ EX: (Xcode)
     $ ./snippets.sh --mode backup --ide xcode
 
 EX: (VSCode)
-
     List the VSCode snippets that are available to be installed.
     $ ./snippets.sh --mode list --ide vscode
 
