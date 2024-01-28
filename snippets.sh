@@ -355,6 +355,7 @@ elif [[ "$MODE" == 'install' ]]; then
     logdStdErr "Backing up existing snippets to ${BACKUP_DIR}"
     mkdir "${BACKUP_DIR}"
     find "${CLIENT_SNIPPETS_DIR}" -maxdepth 1 -type f -print0 | xargs -0 -I {} cp {} "${BACKUP_DIR}"
+    logStdErr "Did back up existing ${IDE} snippets to ${ANSI_FILEPATH}${BACKUP_DIR}${ANSI_DEFAULT}"
   else
     logdStdErr "Skipping backup of existing snippets (dir is empty) ${BACKUP_DIR}"
   fi
