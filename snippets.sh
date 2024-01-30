@@ -350,32 +350,33 @@ elif [[ "$MODE" == 'rename' ]]; then
     exit 10
   fi 
 
-  # Get array of snippet files
-  installed=()
-  while IFS=  read -r -d $'\0'; do
-      installed+=("$REPLY")
-  done < <(find "${CLIENT_SNIPPETS_DIR}" -maxdepth 1 -type f -print0)
-  
-  # ensure that each snippet file is named the same as defined within the file. 
-  for (( i=0; i<"${#installed[@]}"; i++)); do
-    filename=$(basename "${installed[$i]}")
-    snippetname=$(/usr/libexec/PlistBuddy -c "print :IDECodeSnippetTitle" "${installed[$i]}")
-    corrected_filename="${snippetname}.codesnippet"
+  for SNIPPET_EXTENSION in "${SNIPPET_EXTENSIONS[@]}"; do
+    # Get array of snippet files
+    snippets=()
+    while IFS=  read -r -d $'\0'; do
+        snippets+=("$REPLY")
+    done < <(find "${CLIENT_SNIPPETS_DIR}" -maxdepth 1 -type f -name "*.${SNIPPET_EXTENSION}" -print0)
+    
+    # ensure that each snippet file is named the same as defined within the file. 
+    for (( i=0; i<"${#snippets[@]}"; i++)); do
+      filename=$(basename "${snippets[$i]}")
+      snippetname=$(/usr/libexec/PlistBuddy -c "print :IDECodeSnippetTitle" "${snippets[$i]}")
+      corrected_filename="${snippetname}.codesnippet"
+      command="mv \"${snippets[$i]}\" \"${CLIENT_SNIPPETS_DIR}/${corrected_filename}\""
 
-    if [[ "${filename}" != "${corrected_filename}" ]]; then 
-      logdStdErr "installed[$i]:"
-      logdStdErr "  snippet: ${snippetname}"
-      logdStdErr "  filename: ${filename}"
-      logdStdErr "  corrected_filename: ${corrected_filename}"
-      command="mv \"${installed[$i]}\" \"${CLIENT_SNIPPETS_DIR}/${corrected_filename}\""
-      logdStdErr "  command: ${command}"
-      eval "$command"
-    fi
+      if [[ "${filename}" != "${corrected_filename}" ]]; then 
+        logdStdErr "snippets[$i]:"
+        # logdStdErr "  snippet: ${snippetname}"
+        logdStdErr "  filename: ${filename}"
+        logdStdErr "  corrected_filename: ${corrected_filename}"
+        logdStdErr "  command: ${command}"
+        eval "$command"
+      fi
+    done
   done
 
   logStdErr "Did rename installed ${IDE} snippet files to reflect the defined snippet name."
-  # logdStdErr ""
-  # logStdErr "Did move existing ${IDE} snippets to backup dir: ${ANSI_FILEPATH}${BACKUP_DIR}${ANSI_DEFAULT}"
+  
 elif [[ "$MODE" == 'install' || "$MODE" == 'install-clean' ]]; then
   # Backup all existing snippets before overwriting them. 
   # If dir is empty, no need to back anything up.
@@ -424,28 +425,26 @@ elif [[ "$MODE" == 'backup' ]]; then
       # for xcode we want to rename the files as they are being copied
 
       # Get array of snippet files
-      installed=()
+      snippets=()
       while IFS=  read -r -d $'\0'; do
-          installed+=("$REPLY")
+          snippets+=("$REPLY")
       done < <(find "${CLIENT_SNIPPETS_DIR}" -maxdepth 1 -type f -name "${TEAM_PREFIX}*.${SNIPPET_EXTENSION}" -print0)
       
-      # logdStdErr "installed: ${installed[@]}"
+      # logdStdErr "snippets: ${snippets[@]}"
 
       # ensure that each snippet file is named the same as defined within the file. 
-      for (( i=0; i<"${#installed[@]}"; i++)); do
-        filename=$(basename "${installed[$i]}")
-        snippetname=$(/usr/libexec/PlistBuddy -c "print :IDECodeSnippetTitle" "${installed[$i]}")
+      for (( i=0; i<"${#snippets[@]}"; i++)); do
+        filename=$(basename "${snippets[$i]}")
+        snippetname=$(/usr/libexec/PlistBuddy -c "print :IDECodeSnippetTitle" "${snippets[$i]}")
         corrected_filename="${snippetname}.codesnippet"
-        command="cp \"${installed[$i]}\" \"${REPO_SNIPPETS_DIR}/${corrected_filename}\""
+        command="cp \"${snippets[$i]}\" \"${REPO_SNIPPETS_DIR}/${corrected_filename}\""
 
+        logdStdErr "snippets[$i]:"
+        logdStdErr "  filename: ${filename}"
+        logdStdErr "  corrected_filename: ${corrected_filename}"
         if [[ "${filename}" != "${corrected_filename}" ]]; then 
-          # logdStdErr "installed[$i]:"
-          # logdStdErr "  snippet: ${snippetname}"
-          # logdStdErr "  filename: ${filename}"
-          # logdStdErr "  corrected_filename: ${corrected_filename}"
-          logStdErr "Renaming file: ${filename} to ${corrected_filename}"
+          logStdErr "  renaming file: ${filename} to ${corrected_filename}"
         fi
-        # logdStdErr "  command: ${command}"
         eval "$command"
       done
     else 
@@ -453,10 +452,6 @@ elif [[ "$MODE" == 'backup' ]]; then
       cp "${CLIENT_SNIPPETS_DIR}/${TEAM_PREFIX}"*."${SNIPPET_EXTENSION}" "${REPO_SNIPPETS_DIR}"
       set +x
     fi 
-
-
-
-
   done
 
   # TODO: zakkhoyt. For each snippet, update the XML so that the title matches the file name (Xcode only)
