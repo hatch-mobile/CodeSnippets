@@ -241,8 +241,8 @@ while [[ $# -gt 0 ]]; do
       MODE=$(parse_key_value_argument "--mode" "${@}")
       shift $?
 
-      if [[ "$MODE" != "list" && "$MODE" != "install" && "$MODE" != "backup" ]]; then
-        logStdErr "[ERROR] Invalid value for '$1': '$2'. Options are 'list', 'install', or 'backup'."
+      if [[ "$MODE" != "list" && "$MODE" != "install" && "$MODE" != "install-clean" && "$MODE" != "backup" ]]; then
+        logStdErr "[ERROR] Invalid value for '$1': '$2'. Options are 'list', 'install', 'install-clean', or 'backup'."
         printUsage
         exit 1
       fi
@@ -345,7 +345,7 @@ if [[ "$MODE" == 'list' ]]; then
   logStdErr "Installed snippets: ${ANSI_FILEPATH}${CLIENT_SNIPPETS_DIR}${ANSI_DEFAULT}"
   logStdErr ""
   find "$CLIENT_SNIPPETS_DIR" -maxdepth 1  -type f | sed "s|$CLIENT_SNIPPETS_DIR|.|g" | grep -Ev '^.$' | grep -v 'DS_Store' | sort
-elif [[ "$MODE" == 'install' ]]; then
+elif [[ "$MODE" == 'install' || "$MODE" == 'install-clean' ]]; then
   # Backup all existing snippets before overwriting them. 
   # If dir is empty, no need to back anything up.
   if find "$CLIENT_SNIPPETS_DIR" -mindepth 1 -maxdepth 1 -not -path '*/.*' | read -r; then
@@ -354,8 +354,16 @@ elif [[ "$MODE" == 'install' ]]; then
     BACKUP_DIR="${CLIENT_SNIPPETS_DIR}/backup_${TIMESTAMP}"
     logdStdErr "Backing up existing snippets to ${BACKUP_DIR}"
     mkdir "${BACKUP_DIR}"
-    find "${CLIENT_SNIPPETS_DIR}" -maxdepth 1 -type f -print0 | xargs -0 -I {} cp {} "${BACKUP_DIR}"
-    logStdErr "Did back up existing ${IDE} snippets to ${ANSI_FILEPATH}${BACKUP_DIR}${ANSI_DEFAULT}"
+    if [[ "$MODE" == 'install' ]];then 
+      find "${CLIENT_SNIPPETS_DIR}" -maxdepth 1 -type f -print0 | xargs -0 -I {} cp {} "${BACKUP_DIR}"
+      logStdErr "Did copy existing ${IDE} snippets to backup dir: ${ANSI_FILEPATH}${BACKUP_DIR}${ANSI_DEFAULT}"
+    elif [[ "$MODE" == 'install-clean' ]]; then
+      find "${CLIENT_SNIPPETS_DIR}" -maxdepth 1 -type f -print0 | xargs -0 -I {} mv {} "${BACKUP_DIR}"
+      logStdErr "Did move existing ${IDE} snippets to backup dir: ${ANSI_FILEPATH}${BACKUP_DIR}${ANSI_DEFAULT}"
+    else
+      logStdErr "[ERROR] Unhandle value for MODE: ${MODE}"
+      exit 1
+    fi
   else
     logdStdErr "Skipping backup of existing snippets (dir is empty) ${BACKUP_DIR}"
   fi
