@@ -345,7 +345,10 @@ if [[ "$MODE" == 'list' ]]; then
   logStdErr ""
   find "$CLIENT_SNIPPETS_DIR" -maxdepth 1  -type f | sed "s|$CLIENT_SNIPPETS_DIR|.|g" | grep -Ev '^.$' | grep -v 'DS_Store' | sort
 elif [[ "$MODE" == 'rename' ]]; then
-  logStdErr "Renaming installed snippets to reflect the snippet name."
+  if [[ "$IDE" != 'xcode' ]]; then
+    logStdErr "[ERROR] rename mode is not compatible with $IDE."
+    exit 10
+  fi 
 
   # Get array of snippet files
   installed=()
@@ -369,6 +372,8 @@ elif [[ "$MODE" == 'rename' ]]; then
       eval "$command"
     fi
   done
+
+  logStdErr "Did rename installed ${IDE} snippet files to reflect the defined snippet name."
   # logdStdErr ""
   # logStdErr "Did move existing ${IDE} snippets to backup dir: ${ANSI_FILEPATH}${BACKUP_DIR}${ANSI_DEFAULT}"
 elif [[ "$MODE" == 'install' || "$MODE" == 'install-clean' ]]; then
