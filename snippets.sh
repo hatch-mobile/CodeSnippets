@@ -427,7 +427,7 @@ elif [[ "$MODE" == 'backup' ]]; then
       installed=()
       while IFS=  read -r -d $'\0'; do
           installed+=("$REPLY")
-      done < <(find "${CLIENT_SNIPPETS_DIR}" -maxdepth 1 -type f -name "*.${SNIPPET_EXTENSION}" -print0)
+      done < <(find "${CLIENT_SNIPPETS_DIR}" -maxdepth 1 -type f -name "${TEAM_PREFIX}*.${SNIPPET_EXTENSION}" -print0)
       
       # logdStdErr "installed: ${installed[@]}"
 
