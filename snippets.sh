@@ -107,7 +107,8 @@ printUsage () {
   logStdErr ""
   logStdErr "    ${ANSI_BOLD}--mode${ANSI_DEFAULT}: The mode for the script to operate in (list, install or backup)."
   logStdErr "        ${ANSI_ARGUMENT}list${ANSI_DEFAULT}: Print a list of the snippet files availabel to be installed."
-  logStdErr "        ${ANSI_ARGUMENT}install${ANSI_DEFAULT}: Copies snippets from repo dir to IDE dir."
+  logStdErr "        ${ANSI_ARGUMENT}install${ANSI_DEFAULT}: Copies snippets from repo dir to IDE dir after copying all to a backup folder."
+  logStdErr "        ${ANSI_ARGUMENT}install-clean${ANSI_DEFAULT}: Copies snippets from repo dir to IDE dir after moving all to a backup folder."
   logStdErr "          ${ANSI_ORANGE}Note${ANSI_DEFAULT}: Any exsting snippets will first be copied to a backup folder in the destination directory."
   logStdErr "        ${ANSI_ARGUMENT}backup${ANSI_DEFAULT}: Copies snippets from IDE dir into repo dir."
   logStdErr "          ${ANSI_ORANGE}Note${ANSI_DEFAULT}: Only files that begin with ${ANSI_ORANGE}'hatch_'${ANSI_DEFAULT} will be copied"
@@ -241,8 +242,8 @@ while [[ $# -gt 0 ]]; do
       MODE=$(parse_key_value_argument "--mode" "${@}")
       shift $?
 
-      if [[ "$MODE" != "list" && "$MODE" != "install" && "$MODE" != "backup" ]]; then
-        logStdErr "[ERROR] Invalid value for '$1': '$2'. Options are 'list', 'install', or 'backup'."
+      if [[ "$MODE" != "list" && "$MODE" != "install" && "$MODE" != "install-clean" && "$MODE" != "backup" && "$MODE" != "rename" ]]; then
+        logStdErr "[ERROR] Invalid value for '$1': '$2'. Options are 'list', 'install', 'install-clean', or 'backup'."
         printUsage
         exit 1
       fi
@@ -335,8 +336,6 @@ else
   exit 11
 fi
 
-
-
 if [[ "$MODE" == 'list' ]]; then
   logStdErr "Available snippets: ${ANSI_FILEPATH}${REPO_SNIPPETS_DIR}${ANSI_DEFAULT}"
   logStdErr ""
@@ -345,7 +344,40 @@ if [[ "$MODE" == 'list' ]]; then
   logStdErr "Installed snippets: ${ANSI_FILEPATH}${CLIENT_SNIPPETS_DIR}${ANSI_DEFAULT}"
   logStdErr ""
   find "$CLIENT_SNIPPETS_DIR" -maxdepth 1  -type f | sed "s|$CLIENT_SNIPPETS_DIR|.|g" | grep -Ev '^.$' | grep -v 'DS_Store' | sort
-elif [[ "$MODE" == 'install' ]]; then
+elif [[ "$MODE" == 'rename' ]]; then
+  if [[ "$IDE" != 'xcode' ]]; then
+    logStdErr "[ERROR] rename mode is not compatible with $IDE."
+    exit 10
+  fi 
+
+  for SNIPPET_EXTENSION in "${SNIPPET_EXTENSIONS[@]}"; do
+    # Get array of snippet files
+    snippets=()
+    while IFS=  read -r -d $'\0'; do
+        snippets+=("$REPLY")
+    done < <(find "${CLIENT_SNIPPETS_DIR}" -maxdepth 1 -type f -name "*.${SNIPPET_EXTENSION}" -print0)
+    
+    # ensure that each snippet file is named the same as defined within the file. 
+    for (( i=0; i<"${#snippets[@]}"; i++)); do
+      filename=$(basename "${snippets[$i]}")
+      snippetname=$(/usr/libexec/PlistBuddy -c "print :IDECodeSnippetTitle" "${snippets[$i]}")
+      corrected_filename="${snippetname}.codesnippet"
+      command="mv \"${snippets[$i]}\" \"${CLIENT_SNIPPETS_DIR}/${corrected_filename}\""
+
+      if [[ "${filename}" != "${corrected_filename}" ]]; then 
+        logdStdErr "snippets[$i]:"
+        # logdStdErr "  snippet: ${snippetname}"
+        logdStdErr "  filename: ${filename}"
+        logdStdErr "  corrected_filename: ${corrected_filename}"
+        logdStdErr "  command: ${command}"
+        eval "$command"
+      fi
+    done
+  done
+
+  logStdErr "Did rename installed ${IDE} snippet files to reflect the defined snippet name."
+  
+elif [[ "$MODE" == 'install' || "$MODE" == 'install-clean' ]]; then
   # Backup all existing snippets before overwriting them. 
   # If dir is empty, no need to back anything up.
   if find "$CLIENT_SNIPPETS_DIR" -mindepth 1 -maxdepth 1 -not -path '*/.*' | read -r; then
@@ -354,7 +386,17 @@ elif [[ "$MODE" == 'install' ]]; then
     BACKUP_DIR="${CLIENT_SNIPPETS_DIR}/backup_${TIMESTAMP}"
     logdStdErr "Backing up existing snippets to ${BACKUP_DIR}"
     mkdir "${BACKUP_DIR}"
-    find "${CLIENT_SNIPPETS_DIR}" -maxdepth 1 -type f -print0 | xargs -0 -I {} cp {} "${BACKUP_DIR}"
+    if [[ "$MODE" == 'install' ]];then 
+      find "${CLIENT_SNIPPETS_DIR}" -maxdepth 1 -type f -print0 | xargs -0 -I {} cp {} "${BACKUP_DIR}"
+      logStdErr "Did copy existing ${IDE} snippets to backup dir: ${ANSI_FILEPATH}${BACKUP_DIR}${ANSI_DEFAULT}"
+    elif [[ "$MODE" == 'install-clean' ]]; then
+      # FIXME: zakkhoyt. condider only deleting those files where either filename or snippetname begins with TEAM_PREFIX      
+      find "${CLIENT_SNIPPETS_DIR}" -maxdepth 1 -type f -print0 | xargs -0 -I {} mv {} "${BACKUP_DIR}"
+      logStdErr "Did move existing ${IDE} snippets to backup dir: ${ANSI_FILEPATH}${BACKUP_DIR}${ANSI_DEFAULT}"
+    else
+      logStdErr "[ERROR] Unhandle value for MODE: ${MODE}"
+      exit 1
+    fi
   else
     logdStdErr "Skipping backup of existing snippets (dir is empty) ${BACKUP_DIR}"
   fi
@@ -378,12 +420,44 @@ elif [[ "$MODE" == 'backup' ]]; then
   # copy snippets from client machine into repo
   for SNIPPET_EXTENSION in "${SNIPPET_EXTENSIONS[@]}"; do
     logdStdErr "Backing up ${IDE} snippets with prefix '${TEAM_PREFIX}' and extension '${SNIPPET_EXTENSION}'..."
-    set -x
-    cp "${CLIENT_SNIPPETS_DIR}/${TEAM_PREFIX}"*."${SNIPPET_EXTENSION}" "${REPO_SNIPPETS_DIR}"
-    set +x
-  done
 
-  # TODO: zakkhoyt. For each snippet, update the XML so that the title matches the file name (Xcode only)
+    if [[ "$IDE" == 'xcode' ]]; then
+      # FIXME: zakkhoyt. Update the code below to filter snippets not by filename beginning with $TEAM_PREFIX
+      # rather read the snipet name from the file itself. This makes more sense as:
+      # * xcode tends to stomp on the file names
+      # * the files are renamed to reflect the store name anyhow (but not until after filtering by name)
+
+      # for xcode we want to rename the files as they are being copied
+
+      # Get array of snippet files
+      snippets=()
+      while IFS=  read -r -d $'\0'; do
+          snippets+=("$REPLY")
+      done < <(find "${CLIENT_SNIPPETS_DIR}" -maxdepth 1 -type f -name "${TEAM_PREFIX}*.${SNIPPET_EXTENSION}" -print0)
+      
+      # logdStdErr "snippets: ${snippets[@]}"
+
+      # ensure that each snippet file is named the same as defined within the file. 
+      for (( i=0; i<"${#snippets[@]}"; i++)); do
+        filename=$(basename "${snippets[$i]}")
+        snippetname=$(/usr/libexec/PlistBuddy -c "print :IDECodeSnippetTitle" "${snippets[$i]}")
+        corrected_filename="${snippetname}.codesnippet"
+        command="cp \"${snippets[$i]}\" \"${REPO_SNIPPETS_DIR}/${corrected_filename}\""
+
+        logdStdErr "snippets[$i]:"
+        logdStdErr "  filename: ${filename}"
+        logdStdErr "  corrected_filename: ${corrected_filename}"
+        if [[ "${filename}" != "${corrected_filename}" ]]; then 
+          logStdErr "  renaming file: ${filename} to ${corrected_filename}"
+        fi
+        eval "$command"
+      done
+    else 
+      set -x
+      cp "${CLIENT_SNIPPETS_DIR}/${TEAM_PREFIX}"*."${SNIPPET_EXTENSION}" "${REPO_SNIPPETS_DIR}"
+      set +x
+    fi 
+  done
 
   log "Did back up ${IDE} snippets."
 else 

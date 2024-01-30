@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>IDECodeSnippetCompletionPrefix</key>
-	<string>__slintthis</string>
+	<string>__todow</string>
 	<key>IDECodeSnippetCompletionScopes</key>
 	<array>
 		<string>All</string>
 	</array>
 	<key>IDECodeSnippetContents</key>
-	<string>// swiftlint:disable:this &lt;#flag#&gt;</string>
+	<string>#warning("TODO: &lt;#username#&gt; - &lt;#message#&gt;")</string>
 	<key>IDECodeSnippetIdentifier</key>
-	<string>C856EA25-E51F-45D4-9D4C-61AF8DCD46DD</string>
+	<string>B5DA313B-9CEC-4CFD-A912-479BE93834C9</string>
 	<key>IDECodeSnippetLanguage</key>
 	<string>Xcode.SourceCodeLanguage.Swift</string>
 	<key>IDECodeSnippetSummary</key>
 	<string></string>
 	<key>IDECodeSnippetTitle</key>
-	<string>hatch_swiftlint_disable_this</string>
+	<string>hatch_warning_todo</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>

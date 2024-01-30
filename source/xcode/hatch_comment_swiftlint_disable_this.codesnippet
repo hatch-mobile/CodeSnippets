@@ -3,22 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>IDECodeSnippetCompletionPrefix</key>
-	<string>__sformatde</string>
+	<string>__slintthis</string>
 	<key>IDECodeSnippetCompletionScopes</key>
 	<array>
 		<string>All</string>
 	</array>
 	<key>IDECodeSnippetContents</key>
-	<string>// swiftformat:disable &lt;#flag#&gt;
-    // swiftformat:enable &lt;#flag#&gt;</string>
+	<string>// swiftlint:disable:this &lt;#flag#&gt;</string>
 	<key>IDECodeSnippetIdentifier</key>
-	<string>C9B36715-D50C-4250-B115-AC237567D6A4</string>
+	<string>C856EA25-E51F-45D4-9D4C-61AF8DCD46DD</string>
 	<key>IDECodeSnippetLanguage</key>
 	<string>Xcode.SourceCodeLanguage.Swift</string>
 	<key>IDECodeSnippetSummary</key>
 	<string></string>
 	<key>IDECodeSnippetTitle</key>
-	<string>hatch_swiftformat_disable_enable</string>
+	<string>hatch_comment_swiftlint_disable_this</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>

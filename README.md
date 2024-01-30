@@ -42,3 +42,12 @@ Example: Installing snippets for Xcode
 
 <img src="https://github.com/hatch-mobile/CodeSnippets/assets/2229408/5fb386f4-bacf-4bd6-a0a9-bdfe1f6b9aa4" width="85%">
 
+
+
+## TODO
+* [ ] establish and document naming convention for snippets (title/filename should match)
+  * [ ] update help/readme
+  * [ ] update existing filenames/snippets
+* [ ] establish and document convention for hotkey
+  * [ ] update help/readme
+  * [ ] update existing snippets

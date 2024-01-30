@@ -3,21 +3,22 @@
 <plist version="1.0">
 <dict>
 	<key>IDECodeSnippetCompletionPrefix</key>
-	<string>__sformatnext</string>
+	<string>__sformatde</string>
 	<key>IDECodeSnippetCompletionScopes</key>
 	<array>
 		<string>All</string>
 	</array>
 	<key>IDECodeSnippetContents</key>
-	<string>// swiftformat:disable:next &lt;#flag#&gt;</string>
+	<string>// swiftformat:disable &lt;#flag#&gt;
+    // swiftformat:enable &lt;#flag#&gt;</string>
 	<key>IDECodeSnippetIdentifier</key>
-	<string>DB18B4F4-FF83-4B86-9122-18EDB2661A50</string>
+	<string>C9B36715-D50C-4250-B115-AC237567D6A4</string>
 	<key>IDECodeSnippetLanguage</key>
 	<string>Xcode.SourceCodeLanguage.Swift</string>
 	<key>IDECodeSnippetSummary</key>
 	<string></string>
 	<key>IDECodeSnippetTitle</key>
-	<string>hatch_swiftformat_disable_next</string>
+	<string>hatch_comment_swiftformat_disable_enable</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>
