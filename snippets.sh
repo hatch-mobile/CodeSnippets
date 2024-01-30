@@ -419,9 +419,13 @@ elif [[ "$MODE" == 'backup' ]]; then
   # copy snippets from client machine into repo
   for SNIPPET_EXTENSION in "${SNIPPET_EXTENSIONS[@]}"; do
     logdStdErr "Backing up ${IDE} snippets with prefix '${TEAM_PREFIX}' and extension '${SNIPPET_EXTENSION}'..."
-    
 
     if [[ "$IDE" == 'xcode' ]]; then
+      # FIXME: zakkhoyt. Update the code below to filter snippets not by filename beginning with $TEAM_PREFIX
+      # rather read the snipet name from the file itself. This makes more sense as:
+      # * xcode tends to stomp on the file names
+      # * the files are renamed to reflect the store name anyhow (but not until after filtering by name)
+
       # for xcode we want to rename the files as they are being copied
 
       # Get array of snippet files
@@ -453,8 +457,6 @@ elif [[ "$MODE" == 'backup' ]]; then
       set +x
     fi 
   done
-
-  # TODO: zakkhoyt. For each snippet, update the XML so that the title matches the file name (Xcode only)
 
   log "Did back up ${IDE} snippets."
 else 
