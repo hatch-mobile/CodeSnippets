@@ -10,7 +10,7 @@
 	</array>
 	<key>IDECodeSnippetContents</key>
 	<string>// swiftlint:disable &lt;#flag#&gt;
-            // swiftlint:enable &lt;#flag#&gt;</string>
+// swiftlint:enable &lt;#flag#&gt;</string>
 	<key>IDECodeSnippetIdentifier</key>
 	<string>778E30E6-8C13-4DED-B06F-1519D900AE9B</string>
 	<key>IDECodeSnippetLanguage</key>
