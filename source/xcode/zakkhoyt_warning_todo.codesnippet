@@ -3,27 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>IDECodeSnippetCompletionPrefix</key>
-	<string>__qcexswift</string>
+	<string>__tozw</string>
 	<key>IDECodeSnippetCompletionScopes</key>
 	<array>
 		<string>All</string>
 	</array>
 	<key>IDECodeSnippetContents</key>
-	<string>/// ## Example
-///
-/// ```swift
-/// &lt;#swift code#&gt;
-/// ```
-///
-</string>
+	<string>#warning("TODO: zakkhoyt - ")</string>
 	<key>IDECodeSnippetIdentifier</key>
-	<string>141697A4-73C0-40E3-8B38-9828A49FC550</string>
+	<string>984C49EC-DFCB-4622-9687-0D2725B1621D</string>
 	<key>IDECodeSnippetLanguage</key>
 	<string>Xcode.SourceCodeLanguage.Swift</string>
 	<key>IDECodeSnippetSummary</key>
 	<string></string>
 	<key>IDECodeSnippetTitle</key>
-	<string>hatch_quick_help_markdown_code_fence_swift</string>
+	<string>zakkhoyt_warning_todo</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>

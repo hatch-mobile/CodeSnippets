@@ -3,27 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>IDECodeSnippetCompletionPrefix</key>
-	<string>__qcexswift</string>
+	<string>__fizc</string>
 	<key>IDECodeSnippetCompletionScopes</key>
 	<array>
 		<string>All</string>
 	</array>
 	<key>IDECodeSnippetContents</key>
-	<string>/// ## Example
-///
-/// ```swift
-/// &lt;#swift code#&gt;
-/// ```
-///
-</string>
+	<string>// FIXME: zakkhoyt - &lt;#details#&gt;</string>
 	<key>IDECodeSnippetIdentifier</key>
-	<string>141697A4-73C0-40E3-8B38-9828A49FC550</string>
+	<string>FE5EED20-D01B-4652-83A1-D5F0C0E2964F</string>
 	<key>IDECodeSnippetLanguage</key>
 	<string>Xcode.SourceCodeLanguage.Swift</string>
 	<key>IDECodeSnippetSummary</key>
 	<string></string>
 	<key>IDECodeSnippetTitle</key>
-	<string>hatch_quick_help_markdown_code_fence_swift</string>
+	<string>zakkhoyt_comment_fixme</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>

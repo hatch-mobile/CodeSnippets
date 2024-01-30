@@ -3,27 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>IDECodeSnippetCompletionPrefix</key>
-	<string>__qcexswift</string>
+	<string>__slintthis</string>
 	<key>IDECodeSnippetCompletionScopes</key>
 	<array>
 		<string>All</string>
 	</array>
 	<key>IDECodeSnippetContents</key>
-	<string>/// ## Example
-///
-/// ```swift
-/// &lt;#swift code#&gt;
-/// ```
-///
-</string>
+	<string>// swiftlint:disable:this &lt;#flag#&gt;</string>
 	<key>IDECodeSnippetIdentifier</key>
-	<string>141697A4-73C0-40E3-8B38-9828A49FC550</string>
+	<string>C856EA25-E51F-45D4-9D4C-61AF8DCD46DD</string>
 	<key>IDECodeSnippetLanguage</key>
 	<string>Xcode.SourceCodeLanguage.Swift</string>
 	<key>IDECodeSnippetSummary</key>
 	<string></string>
 	<key>IDECodeSnippetTitle</key>
-	<string>hatch_quick_help_markdown_code_fence_swift</string>
+	<string>hatch_comment_swiftlint_disable_this</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>
