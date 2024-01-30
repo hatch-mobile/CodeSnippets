@@ -18,8 +18,11 @@ If you just want to install the Xcode snippets onto your dev machine:
 # list snippets
 ./snippets.sh --ide xcode --mode list
 
-# install snippets
-./snippets.sh --ide xcode --mode install 
+# install snippets (after copying existing to backup folder)
+./snippets.sh --ide xcode --mode install
+
+# install snippets (after moving existing to backup folder)
+./snippets.sh --ide xcode --mode install-clean
 ```
 
 ### Help
