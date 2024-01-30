@@ -390,6 +390,7 @@ elif [[ "$MODE" == 'install' || "$MODE" == 'install-clean' ]]; then
       find "${CLIENT_SNIPPETS_DIR}" -maxdepth 1 -type f -print0 | xargs -0 -I {} cp {} "${BACKUP_DIR}"
       logStdErr "Did copy existing ${IDE} snippets to backup dir: ${ANSI_FILEPATH}${BACKUP_DIR}${ANSI_DEFAULT}"
     elif [[ "$MODE" == 'install-clean' ]]; then
+      # FIXME: zakkhoyt. condider only deleting those files where either filename or snippetname begins with TEAM_PREFIX      
       find "${CLIENT_SNIPPETS_DIR}" -maxdepth 1 -type f -print0 | xargs -0 -I {} mv {} "${BACKUP_DIR}"
       logStdErr "Did move existing ${IDE} snippets to backup dir: ${ANSI_FILEPATH}${BACKUP_DIR}${ANSI_DEFAULT}"
     else
