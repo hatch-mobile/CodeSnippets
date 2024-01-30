@@ -107,7 +107,8 @@ printUsage () {
   logStdErr ""
   logStdErr "    ${ANSI_BOLD}--mode${ANSI_DEFAULT}: The mode for the script to operate in (list, install or backup)."
   logStdErr "        ${ANSI_ARGUMENT}list${ANSI_DEFAULT}: Print a list of the snippet files availabel to be installed."
-  logStdErr "        ${ANSI_ARGUMENT}install${ANSI_DEFAULT}: Copies snippets from repo dir to IDE dir."
+  logStdErr "        ${ANSI_ARGUMENT}install${ANSI_DEFAULT}: Copies snippets from repo dir to IDE dir after copying all to a backup folder."
+  logStdErr "        ${ANSI_ARGUMENT}install-clean${ANSI_DEFAULT}: Copies snippets from repo dir to IDE dir after moving all to a backup folder."
   logStdErr "          ${ANSI_ORANGE}Note${ANSI_DEFAULT}: Any exsting snippets will first be copied to a backup folder in the destination directory."
   logStdErr "        ${ANSI_ARGUMENT}backup${ANSI_DEFAULT}: Copies snippets from IDE dir into repo dir."
   logStdErr "          ${ANSI_ORANGE}Note${ANSI_DEFAULT}: Only files that begin with ${ANSI_ORANGE}'hatch_'${ANSI_DEFAULT} will be copied"
@@ -241,7 +242,7 @@ while [[ $# -gt 0 ]]; do
       MODE=$(parse_key_value_argument "--mode" "${@}")
       shift $?
 
-      if [[ "$MODE" != "list" && "$MODE" != "install" && "$MODE" != "install-clean" && "$MODE" != "backup" ]]; then
+      if [[ "$MODE" != "list" && "$MODE" != "install" && "$MODE" != "install-clean" && "$MODE" != "backup" && "$MODE" != "rename" ]]; then
         logStdErr "[ERROR] Invalid value for '$1': '$2'. Options are 'list', 'install', 'install-clean', or 'backup'."
         printUsage
         exit 1
@@ -335,8 +336,6 @@ else
   exit 11
 fi
 
-
-
 if [[ "$MODE" == 'list' ]]; then
   logStdErr "Available snippets: ${ANSI_FILEPATH}${REPO_SNIPPETS_DIR}${ANSI_DEFAULT}"
   logStdErr ""
@@ -345,6 +344,33 @@ if [[ "$MODE" == 'list' ]]; then
   logStdErr "Installed snippets: ${ANSI_FILEPATH}${CLIENT_SNIPPETS_DIR}${ANSI_DEFAULT}"
   logStdErr ""
   find "$CLIENT_SNIPPETS_DIR" -maxdepth 1  -type f | sed "s|$CLIENT_SNIPPETS_DIR|.|g" | grep -Ev '^.$' | grep -v 'DS_Store' | sort
+elif [[ "$MODE" == 'rename' ]]; then
+  logStdErr "Renaming installed snippets to reflect the snippet name."
+
+  # Get array of snippet files
+  installed=()
+  while IFS=  read -r -d $'\0'; do
+      installed+=("$REPLY")
+  done < <(find "${CLIENT_SNIPPETS_DIR}" -maxdepth 1 -type f -print0)
+  
+  # ensure that each snippet file is named the same as defined within the file. 
+  for (( i=0; i<"${#installed[@]}"; i++)); do
+    filename=$(basename "${installed[$i]}")
+    snippetname=$(/usr/libexec/PlistBuddy -c "print :IDECodeSnippetTitle" "${installed[$i]}")
+    corrected_filename="${snippetname}.codesnippet"
+
+    if [[ "${filename}" != "${corrected_filename}" ]]; then 
+      logdStdErr "installed[$i]:"
+      logdStdErr "  snippet: ${snippetname}"
+      logdStdErr "  filename: ${filename}"
+      logdStdErr "  corrected_filename: ${corrected_filename}"
+      command="mv \"${installed[$i]}\" \"${CLIENT_SNIPPETS_DIR}/${corrected_filename}\""
+      logdStdErr "  command: ${command}"
+      eval "$command"
+    fi
+  done
+  # logdStdErr ""
+  # logStdErr "Did move existing ${IDE} snippets to backup dir: ${ANSI_FILEPATH}${BACKUP_DIR}${ANSI_DEFAULT}"
 elif [[ "$MODE" == 'install' || "$MODE" == 'install-clean' ]]; then
   # Backup all existing snippets before overwriting them. 
   # If dir is empty, no need to back anything up.
