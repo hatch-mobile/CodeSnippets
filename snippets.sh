@@ -418,9 +418,45 @@ elif [[ "$MODE" == 'backup' ]]; then
   # copy snippets from client machine into repo
   for SNIPPET_EXTENSION in "${SNIPPET_EXTENSIONS[@]}"; do
     logdStdErr "Backing up ${IDE} snippets with prefix '${TEAM_PREFIX}' and extension '${SNIPPET_EXTENSION}'..."
-    set -x
-    cp "${CLIENT_SNIPPETS_DIR}/${TEAM_PREFIX}"*."${SNIPPET_EXTENSION}" "${REPO_SNIPPETS_DIR}"
-    set +x
+    
+
+    if [[ "$IDE" == 'xcode' ]]; then
+      # for xcode we want to rename the files as they are being copied
+
+      # Get array of snippet files
+      installed=()
+      while IFS=  read -r -d $'\0'; do
+          installed+=("$REPLY")
+      done < <(find "${CLIENT_SNIPPETS_DIR}" -maxdepth 1 -type f -name "*.codesnippet" -print0)
+      
+      # logdStdErr "installed: ${installed[@]}"
+
+      # ensure that each snippet file is named the same as defined within the file. 
+      for (( i=0; i<"${#installed[@]}"; i++)); do
+        filename=$(basename "${installed[$i]}")
+        snippetname=$(/usr/libexec/PlistBuddy -c "print :IDECodeSnippetTitle" "${installed[$i]}")
+        corrected_filename="${snippetname}.codesnippet"
+        command="cp \"${installed[$i]}\" \"${REPO_SNIPPETS_DIR}/${corrected_filename}\""
+
+        if [[ "${filename}" != "${corrected_filename}" ]]; then 
+          # logdStdErr "installed[$i]:"
+          # logdStdErr "  snippet: ${snippetname}"
+          # logdStdErr "  filename: ${filename}"
+          # logdStdErr "  corrected_filename: ${corrected_filename}"
+          logStdErr "Renaming file: ${filename} to ${corrected_filename}"
+        fi
+        # logdStdErr "  command: ${command}"
+        eval "$command"
+      done
+    else 
+      set -x
+      cp "${CLIENT_SNIPPETS_DIR}/${TEAM_PREFIX}"*."${SNIPPET_EXTENSION}" "${REPO_SNIPPETS_DIR}"
+      set +x
+    fi 
+
+
+
+
   done
 
   # TODO: zakkhoyt. For each snippet, update the XML so that the title matches the file name (Xcode only)
