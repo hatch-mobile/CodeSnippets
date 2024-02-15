@@ -1,5 +1,9 @@
 # About 
-A repo to share code snippets and and installer script. 
+This repo is used to share "team" code snippets (ignores personal snippets). Includes a script which acts as:
+* Installer w/local backup
+* Publish changes back to the repo.
+* Enforces naming conventions between the snippet and filename.
+* Supports `Xcode`, some support for `VSCode` as well. 
 
 # How to Use
 
@@ -13,7 +17,7 @@ cd CodeSnippets
 ## Usage 
 
 ### TLDR
-If you just want to install the Xcode snippets onto your dev machine:
+If you just want to install the Xcode snippets on your dev machine:
 ```
 # list snippets
 ./snippets.sh --ide xcode --mode list
@@ -23,6 +27,8 @@ If you just want to install the Xcode snippets onto your dev machine:
 
 # install snippets (after moving existing to backup folder)
 ./snippets.sh --ide xcode --mode install-clean
+
+# Any of the above can accept the `--debug` flag for additional output
 ```
 
 ### Help
