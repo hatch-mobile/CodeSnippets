@@ -54,9 +54,9 @@ Example: Installing snippets for Xcode
 
 
 ## TODO
-* [ ] establish and document naming convention for snippets (title/filename should match)
+* [X] establish and document naming convention for snippets (title/filename should match)
   * [ ] update help/readme
-  * [ ] update existing filenames/snippets
+  * [x] update existing filenames/snippets
 * [ ] establish and document convention for hotkey
   * [ ] update help/readme
   * [ ] update existing snippets
