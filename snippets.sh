@@ -126,6 +126,8 @@ printUsage () {
   logStdErr "    \$ ${ANSI_COMMAND}$SCRIPT_NAME --ide xcode --mode install${ANSI_DEFAULT}"
   logStdErr ""
   logStdErr "    Back up Xcode snippets from your system to this directory (make your own pull request)."
+  logStdErr "        * You will want to first create a working branch"
+  logStdErr "        * Create a pull request if you intend to push changes back to the repo"
   logStdErr "    \$ ${ANSI_COMMAND}$SCRIPT_NAME --ide xcode --mode backup${ANSI_DEFAULT}"
   logStdErr ""
   logStdErr "EX: (VSCode)"
@@ -136,6 +138,8 @@ printUsage () {
   logStdErr "    \$ ${ANSI_COMMAND}$SCRIPT_NAME --ide vscode --mode install${ANSI_DEFAULT}"
   logStdErr ""
   logStdErr "    Back up VSCode snippets from your system to this directory (make your own pull request)."
+  logStdErr "        * You will want to first create a working branch"
+  logStdErr "        * Create a pull request if you intend to push changes back to the repo"
   logStdErr "    \$ ${ANSI_COMMAND}$SCRIPT_NAME --ide vscode --mode backup${ANSI_DEFAULT}"
   logStdErr ""
 }
@@ -337,7 +341,7 @@ else
 fi
 
 if [[ "$MODE" == 'list' ]]; then
-  logStdErr "Available snippets: ${ANSI_FILEPATH}${REPO_SNIPPETS_DIR}${ANSI_DEFAULT}"
+  logStdErr "Installable snippets: ${ANSI_FILEPATH}${REPO_SNIPPETS_DIR}${ANSI_DEFAULT}"
   logStdErr ""
   find "$REPO_SNIPPETS_DIR" -maxdepth 1  -type f | sed "s|$REPO_SNIPPETS_DIR|.|g" | grep -Ev '^.$' | grep -v 'DS_Store' | sort
   logStdErr ""
