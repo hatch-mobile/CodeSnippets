@@ -12,15 +12,94 @@
 	// 	],
 	// 	"description": "Log output to console"
 	// }
+
+
+	"<!-- TODO: ${10:username} - ${20:message} -->": {
+		"prefix": [
+			".todo",
+			"__todo",
+			"//todo"
+		],
+		"body": [
+			"<!-- TODO: ${10:username} - ${20:message} -->",
+			"$0"
+		]
+	},
+	"<!-- FIXME: ${10:username} - ${20:message} -->": {
+		"prefix": [
+			".fixme",
+			"__fixme",
+			"//fixme"
+		],
+		"body": [
+			"<!-- FIXME: ${10:username} - ${20:message} -->",
+			"$0"
+		]
+	},
+	"<!-- IDEA: ${10:username} - ${20:message} -->": {
+		"prefix": [
+			".idea",
+			"__idea",
+			"//idea"
+		],
+		"body": [
+			"<!-- IDEA: ${10:username} - ${20:message} -->",
+			"$0"
+		]
+	},
+	"<!-- TODO: zakkhoyt - ${20:message} -->": {
+		"prefix": [
+			".tozo",
+			"__tozo",
+			"//tozo",
+			".ztodo",
+			"__ztodo",
+			"//ztodo"
+		],
+		"body": [
+			"<!-- TODO: zakkhoyt - ${20:message} -->",
+			"$0"
+		]
+	},
+	"<!-- FIXME: zakkhoyt - ${20:message} -->": {
+		"prefix": [
+			".fizme",
+			"__fizme",
+			"//fizme",
+			".zfixme",
+			"__zfixme",
+			"//zfixme"
+		],
+		"body": [
+			"<!-- FIXME: zakkhoyt - ${20:message} -->",
+			"$0"
+		]
+	},
+	"<!-- IDEA: zakkhoyt - ${20:message} -->": {
+		"prefix": [
+			".ideaz",
+			"__ideaz",
+			"//ideaz",
+			".zidea",
+			"__zidea",
+			"//zidea"
+		],
+		"body": [
+			"<!-- IDEA: zakkhoyt - ${20:message} -->",
+			"$0"
+		]
+	},
+
+
 	"markdown flavored code snippet for markdown": {
 		"description": "A Markdown code block for Markdown",
 		"prefix": [
+			".md",
 			"```md",
 			"_md",
-			".md",
+			".markdown",
 			"```markdown",
-			"_markdown",
-			".markdown"
+			"_markdown"
 		],
 		"body": [
 			"```md",
@@ -29,12 +108,28 @@
 			"$0"
 		]
 	},
-	"json flavored code snippet for markdown": {
+	
+	
+	"Custom flavored code snippet for markdown": {
+		"description": "A custom code block for Markdown",
+		"prefix": [
+			".custom",
+			"```custom",
+			"_custom"
+		],
+		"body": [
+			"```${05:language}",
+			"${10:custom code}",
+			"```",
+			"$0"
+		]
+	},
+	"JSON flavored code snippet for markdown": {
 		"description": "A JSON code block for Markdown",
 		"prefix": [
+			".json",
 			"```json",
-			"_json",
-			".json"
+			"_json"
 		],
 		"body": [
 			"```json",
@@ -43,12 +138,26 @@
 			"$0"
 		]
 	},
-	"xml flavored code snippet for markdown": {
+	"Log flavored code snippet for markdown": {
+		"description": "A log code block for Markdown",
+		"prefix": [
+			".log",
+			"```log",
+			"_log"
+		],
+		"body": [
+			"```log",
+			"${10:log}",
+			"```",
+			"$0"
+		]
+	},
+	"XML flavored code snippet for markdown": {
 		"description": "An XML code block for Markdown",
 		"prefix": [
+			".xml",
 			"```xml",
-			"_xml",
-			".xml"
+			"_xml"
 		],
 		"body": [
 			"```xml",
@@ -57,12 +166,12 @@
 			"$0"
 		]
 	},
-	"python flavored code snippet for markdown": {
+	"Python flavored code snippet for markdown": {
 		"description": "A python code block for Markdown",
 		"prefix": [
+			".python",
 			"```python",
-			"_python",
-			".python"
+			"_python"
 		],
 		"body": [
 			"```python",
@@ -74,9 +183,9 @@
 	"Ruby flavored code snippet for markdown": {
 		"description": "A ruby code block for Markdown",
 		"prefix": [
+			".ruby",
 			"```ruby",
-			"_ruby",
-			".ruby"
+			"_ruby"
 		],
 		"body": [
 			"```ruby",
@@ -88,9 +197,9 @@
 	"shell flavored code snippet for markdown": {
 		"description": "A shell code block for Markdown",
 		"prefix": [
+			".sh",
 			"```sh",
-			"_sh",
-			".sh"
+			"_sh"
 		],
 		"body": [
 			"```sh",
@@ -99,12 +208,26 @@
 			"$0"
 		]
 	},
+	"javascript flavored code snippet for markdown": {
+		"description": "A javascript code block for Markdown",
+		"prefix": [
+			".js",
+			"```js",
+			"_js"
+		],
+		"body": [
+			"```js",
+			"${10:js code}",
+			"```",
+			"$0"
+		]
+	},
 	"swift flavored code snippet for markdown": {
 		"description": "A swift code block for Markdown",
 		"prefix": [
+			".swift",
 			"```swift",
-			"_swift",
-			".swift"
+			"_swift"
 		],
 		"body": [
 			"```swift",
@@ -116,9 +239,9 @@
 	"lua flavored code snippet for markdown": {
 		"description": "A lua code block for Markdown",
 		"prefix": [
+			".lua",
 			"```lua",
-			"_lua",
-			".lua"
+			"_lua"
 		],
 		"body": [
 			"```lua",
@@ -130,9 +253,9 @@
 	"regex flavored code snippet for markdown": {
 		"description": "A regex find/replace code block for Markdown",
 		"prefix": [
+			".regex",
 			"```regex",
-			"_regex",
-			".regex"
+			"_regex"
 		],
 		"body": [
 			"# Regex Find/Replace",
@@ -144,6 +267,90 @@
 			"## Replace (${20:${21:Shell}${22:VSCode}${23:XCode}})",
 			"```re",
 			"${30:replace}",
+			"```",
+			"$0"
+		]
+	},
+	"KeyPress (Markdown Extended)": {
+		"description": "A snippet to enter keyboard hotkeys using Extended Markdown",
+		"prefix": [
+			".mdekey",
+			"```mdekey",
+			"_mdekey"
+		],
+		"body": [
+			"<kbd>${10:modifier}</kbd>+<kbd>${11:key}</kbd>",
+			"$0"
+		]
+	},
+	"SQL flavored code snippet for markdown": {
+		"description": "A SQL code block for Markdown",
+		"prefix": [
+			".sql",
+			"```sql",
+			"_sql"
+		],
+		"body": [
+			"```sql",
+			"${10:sql code}",
+			"```",
+			"$0"
+		]
+	},
+	"PlantUML flavored code snippet for markdown": {
+		"description": "A PlantUML code block for Markdown",
+		"prefix": [
+			".puml",
+			"```puml",
+			"_puml"
+		],
+		"body": [
+			"```puml",
+			"@startuml",
+			"${10:puml code}",
+			"@enduml",
+			"```",
+			"$0"
+		]
+	},
+	"HTML flavored code snippet for markdown": {
+		"description": "A HTML code block for Markdown",
+		"prefix": [
+			".html",
+			"```html",
+			"_html"
+		],
+		"body": [
+			"```html",
+			"${10:html code}",
+			"```",
+			"$0"
+		]
+	},
+	"CSS flavored code snippet for markdown": {
+		"description": "A CSS code block for Markdown",
+		"prefix": [
+			".css",
+			"```css",
+			"_css"
+		],
+		"body": [
+			"```css",
+			"${10:css code}",
+			"```",
+			"$0"
+		]
+	},
+	"YAML flavored code snippet for markdown": {
+		"description": "A YAML code block for Markdown",
+		"prefix": [
+			".yaml",
+			"```yaml",
+			"_yaml"
+		],
+		"body": [
+			"```yaml",
+			"${10:yaml code}",
 			"```",
 			"$0"
 		]

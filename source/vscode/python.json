@@ -16,20 +16,58 @@
 	"Comment Function": {
 		"description": "A python function comment snippet",
 		"prefix": [
-			".comFunc"
+			".pyTypeHint",
+			".pyDoc",
+			".pyComment",
 		],
 		"body": [
 			"\"\"\"",
 			"${1:## Summary",
-			"${2:<A short description>}",
+			"${2:[description]}",
 			"}",
 			"${10:## Parameters",
-			"* `${11:name}` (`${12:type}`): ${13:description}",
+			"* `${11:[name]}` (`${12:[type]}`): ${13:[description]}",
 			"}",
-			"${20:## Returns",
-			"* (`${22:type}`): ${23:description}}",
+			"${20:## Throws",
+			"* (`${22:[exception]}`): ${23:[trigger]}",
+			"}",
+			"${30:## Returns",
+			"* (`${32:[type]}`): ${33:[description]}}",
 			"\"\"\"",
 			"$0"
 		]
 	}
+
+	// See ~/Library/Application Support/Code/User/snippets/snippets-global.code-snippets for global snippets
+
+	// "FIXME: {username} [{category}] {note}.": {
+	// 	"description": "A FIXME comment for python (w/username, category, note)",
+	// 	"prefix": [
+	// 		".fixme"
+	// 	],
+	// 	"body": [
+	// 		"# FIXME: ${1:zakkhoyt}.${2:< [${3:category}]>} ${4:<note>}.",
+	// 		"$0"
+	// 	]
+	// },
+	// "TODO: {username} [{category}] {note}.": {
+	// 	"description": "A TODO comment for python (w/username, category, note)",
+	// 	"prefix": [
+	// 		".todo"
+	// 	],
+	// 	"body": [
+	// 		"# TODO: ${1:zakkhoyt}.${2:< [${3:category}]>} ${4:<note>}.",
+	// 		"$0"
+	// 	]
+	// },
+	// "NOTE: {username} [{category}] {note}.": {
+	// 	"description": "A NOTE comment for python (w/username, category, note)",
+	// 	"prefix": [
+	// 		".note"
+	// 	],
+	// 	"body": [
+	// 		"# NOTE: ${1:zakkhoyt}.${2:< [${3:category}]>} ${4:<note>}.",
+	// 		"$0"
+	// 	]
+	// }
 }
