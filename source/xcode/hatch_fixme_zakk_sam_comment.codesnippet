@@ -3,24 +3,24 @@
 <plist version="1.0">
 <dict>
 	<key>IDECodeSnippetCompletionPrefix</key>
-	<string>__hack</string>
+	<string>__fzsc __fmzsc __fizsc </string>
 	<key>IDECodeSnippetCompletionScopes</key>
 	<array>
 		<string>All</string>
 	</array>
 	<key>IDECodeSnippetContents</key>
-	<string>// HACK: &lt;#Scott's thoughts#&gt;</string>
+	<string>// FIXME: zakkhoyt/sam (HSD-12001): &lt;#details#&gt;</string>
 	<key>IDECodeSnippetIdentifier</key>
-	<string>32D319C6-94F4-47ED-82A0-BFA97BEBEC65</string>
+	<string>DE9D195D-AC15-4095-8B86-F7471D3BA697</string>
 	<key>IDECodeSnippetLanguage</key>
 	<string>Xcode.SourceCodeLanguage.Swift</string>
 	<key>IDECodeSnippetSummary</key>
-	<string>A template for Scott's favorite comment</string>
+	<string></string>
 	<key>IDECodeSnippetTitle</key>
-	<string>hatch_comment_hack</string>
+	<string>hatch_fixme_zakk_sam_comment</string>
 	<key>IDECodeSnippetUserSnippet</key>
 	<true/>
 	<key>IDECodeSnippetVersion</key>
-	<integer>2</integer>
+	<integer>0</integer>
 </dict>
 </plist>
