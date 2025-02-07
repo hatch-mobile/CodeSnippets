@@ -9,13 +9,13 @@
 		<string>All</string>
 	</array>
 	<key>IDECodeSnippetContents</key>
-	<string>// HACK: &lt;#Scott's thoughts#&gt;</string>
+	<string>// HACK: &lt;#context#&gt;</string>
 	<key>IDECodeSnippetIdentifier</key>
 	<string>32D319C6-94F4-47ED-82A0-BFA97BEBEC65</string>
 	<key>IDECodeSnippetLanguage</key>
 	<string>Xcode.SourceCodeLanguage.Swift</string>
 	<key>IDECodeSnippetSummary</key>
-	<string>A template for Scott's favorite comment</string>
+	<string>A template for HACK comment</string>
 	<key>IDECodeSnippetTitle</key>
 	<string>hatch_comment_hack</string>
 	<key>IDECodeSnippetUserSnippet</key>
