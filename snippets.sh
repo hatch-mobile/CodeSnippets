@@ -493,6 +493,7 @@ elif [[ "$MODE" == 'backup' ]]; then
           retained_snippet_source_files=("${retained_snippet_source_files[@]}" "$snippet_source_file")
         else
           logdStdErr "    snippet does not refer to ${TEAM_PREFIX}. Discarding..."
+          discarded_snippet_source_files=("${discarded_snippet_source_files[@]}" "$snippet_source_file")
         fi
       done
       
@@ -500,14 +501,16 @@ elif [[ "$MODE" == 'backup' ]]; then
       for ((i=0; i<="${#retained_snippet_source_files[@]}"; i++)); do
         retained_snippet_source_file="${retained_snippet_source_files[$i]}"
         if [[ -z "$retained_snippet_source_file" ]]; then continue; fi
-        logdStdErr --green "  retained_snippet_source_files[$i]: $retained_snippet_source_file" --default
+        # logdStdErr --green "  retained_snippet_source_files[$i]: $retained_snippet_source_file" --default
+        echo -e "\x1B[92m  retained_snippet_source_files[$i]: $retained_snippet_source_file\x1B[0m" 1>&2
       done
 
       logdStdErr "discarded_snippet_source_files.count: ${#discarded_snippet_source_files[@]}"
       for ((i=0; i<="${#discarded_snippet_source_files[@]}"; i++)); do
         discarded_snippet_source_file="${discarded_snippet_source_files[$i]}"
         if [[ -z "$discarded_snippet_source_file" ]]; then continue; fi
-        logdStdErr -red "  discarded_snippet_source_files[$i]: $discarded_snippet_source_file" --default
+        # logdStdErr -red "  discarded_snippet_source_files[$i]: $discarded_snippet_source_file" --default
+        echo -e "\x1B[31m  discarded_snippet_source_files[$i]: $discarded_snippet_source_file\x1B[0m" 1>&2
       done
       
       # return 0
