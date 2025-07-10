@@ -165,9 +165,13 @@ printUsage () {
 
 # Ensure our globals are cleared before populating with args
 unset -v IS_DEBUG
+unset -v IS_DRYRUN
 unset -v IS_ADMIN
 unset -v LIST_AUTHORS
 unset -v TYPE
+INDENT='  '
+NEWLINE='
+'
 
 # Parses script arguments which take the form of:
 #   * --key=value
@@ -252,6 +256,12 @@ while [[ $# -gt 0 ]]; do
       # This arg was processed at the top of the script, so not much to do in this case.
       logdStdErr "Found $1 arg"
       IS_DEBUG="$1"
+      ;;
+    --dry-run)
+      # Looks for presence of --dry-run
+      # This arg was processed at the top of the script, so not much to do in this case.
+      logdStdErr "Found $1 arg"
+      IS_DRYRUN="$1"
       ;;
     --admin)
       # Looks for presence of --admin
@@ -500,7 +510,7 @@ elif [[ "$MODE" == 'backup' ]]; then
         logdStdErr -red "  discarded_snippet_source_files[$i]: $discarded_snippet_source_file" --default
       done
       
-      return 0
+      # return 0
 
 
   #     cat "$FILE" | grep "<key>IDECodeSnippetTitle</key>
@@ -509,16 +519,56 @@ elif [[ "$MODE" == 'backup' ]]; then
       # logdStdErr "snippets: ${snippets[@]}"
 
 
-      snippets=()
+      # retained_snippet_source_files=()
+
+      # retained_snippet_source_files=("$@")
+      logdStdErr "retained_snippet_source_files.count: ${#retained_snippet_source_files[@]}"
+      for ((i=0; i<="${#retained_snippet_source_files[@]}"; i++)); do
+        retained_snippet_source_file="${retained_snippet_source_files[$i]}"
+        if [[ -z "$retained_snippet_source_file" ]]; then continue; fi
+        logdStdErr "\${retained_snippet_source_files[$i]}: $retained_snippet_source_file"
+
+        snippet_basename=$(basename "${retained_snippet_source_file}")
+        snippet_title=$(/usr/libexec/PlistBuddy -c "print :IDECodeSnippetTitle" "${retained_snippet_source_file}")
+        corrected_snippet_basename="${snippet_title}.codesnippet"
+        snippet_dest_file="${REPO_SNIPPETS_DIR}/${corrected_filename}"
+        rename_and_copy_command="cp \"$retained_snippet_source_file\" \"$snippet_dest_file}\""
+
+        logdStdErr "  snippet_basename: ${snippet_basename}"
+        logdStdErr "  snippet_title: ${snippet_title}"
+        logdStdErr "  corrected_snippet_basename: ${corrected_snippet_basename}"
+        logdStdErr "  snippet_basename: ${snippet_basename}"
+        logdStdErr "  snippet_dest_file: ${snippet_dest_file}"
+        logdStdErr "  rename_and_copy_command: ${rename_and_copy_command}"
+        # if [[ "${filename}" != "${corrected_filename}" ]]; then 
+          logStdErr "  renaming file: ${filename} to ${corrected_filename}"
+        # fi
+
+        if [[ -n "$IS_DRYRUN" ]]; then 
+           echo -e "\x1B[93m\x1B[1m  ${rename_and_copy_command}\x1B[0m\x1B[2m # dry-run\x1B[0m" 2>&1
+        else 
+          rename_and_copy_output="$(eval "$rename_and_copy_command")"
+          rename_and_copy_rval=$?
+          logdStdErr "  rename_and_copy_output: ${rename_and_copy_output}"
+          logdStdErr "  rename_and_copy_rval: ${rename_and_copy_rval}"
+          
+          if [[ $rename_and_copy_rval -ne 0 ]]; then
+            echo -e "\x1B[91m\x1B[1m  [ERROR]\x1B[0m Failed to rename and copy${NEWLINE}" \
+              "${INDENT}${INDENT}command: \x1B[93m\x1B[1m${rename_and_copy_command}\x1B[0m${NEWLINE}" \
+              "${INDENT}${INDENT}exit status: \x1B[91m[${rename_and_copy_rval}]\x1B[0m" 2>&1
+          fi
+        fi
+      done
+      
 
       # ensure that each snippet file is named the same as defined within the file. 
-      for (( i=0; i<"${#snippets[@]}"; i++)); do
-        filename=$(basename "${snippets[$i]}")
-        snippettitle=$(/usr/libexec/PlistBuddy -c "print :IDECodeSnippetTitle" "${snippets[$i]}")
+      for (( i=0; i<"${#retained_snippet_source_files[@]}"; i++)); do
+        filename=$(basename "${retained_snippet_source_files[$i]}")
+        snippettitle=$(/usr/libexec/PlistBuddy -c "print :IDECodeSnippetTitle" "${retained_snippet_source_files[$i]}")
         corrected_filename="${snippettitle}.codesnippet"
-        command="cp \"${snippets[$i]}\" \"${REPO_SNIPPETS_DIR}/${corrected_filename}\""
+        command="cp \"${retained_snippet_source_files[$i]}\" \"${REPO_SNIPPETS_DIR}/${corrected_filename}\""
 
-        logdStdErr "snippets[$i]:"
+        logdStdErr "retained_snippet_source_files[$i]:"
         logdStdErr "  filename: ${filename}"
         logdStdErr "  corrected_filename: ${corrected_filename}"
         if [[ "${filename}" != "${corrected_filename}" ]]; then 
