@@ -23,7 +23,7 @@
             swiftSettings: &lt;#T##[SwiftSetting]?#&gt;,
             linkerSettings: &lt;#T##[LinkerSetting]?#&gt;,
             plugins: &lt;#T##[Target.PluginUsage]?#&gt;
-        )</string>
+        ) </string>
 	<key>IDECodeSnippetIdentifier</key>
 	<string>268CE079-BAF1-46CC-A97D-EDF7C8AD336B</string>
 	<key>IDECodeSnippetLanguage</key>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string>__stbugjira __stbughsd</string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>    @Test(
+        "&lt;#Test Title#&gt;",
+        .bug(
+            "https://hatchbaby.atlassian.net/browse/HSD-&lt;#NNNNN#&gt;"
+            "Jira HSD-&lt;#NNNNN#&gt;"
+        )
+    )</string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>0C2D845D-C9F1-45EA-8445-C59D96E116DA</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetSummary</key>
+	<string></string>
+	<key>IDECodeSnippetTitle</key>
+	<string>hatch_swift_testing_traits_bug_jira</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>2</integer>
+</dict>
+</plist>
