@@ -1,4 +1,21 @@
-#!/bin/bash
+#!/bin/zsh
+# shellcheck shell=bash
+# ---- ---- ----  About this Script  ---- ---- ----
+#
+# <!-- TODO: this script does... -->
+#
+# ---- ---- ---- ----  Imports  ---- ---- ---- ----
+# set -e
+# # shellcheck disable=SC1091
+# source "$HOME/.zsh_home/utilities/.zsh_scripting_utilities" "$0" "$@" > /dev/null
+# set +e
+# ---- ---- ----   Argument Parsing   ---- ---- ----
+
+# ---- ---- ----     Script Work     ---- ---- ----
+
+
+
+
 
 
 # -------- BEGIN META NOTES --------
@@ -326,6 +343,7 @@ elif [[ "$IDE" == 'vscode' ]]; then
   SNIPPET_EXTENSIONS=("code-snippets" "json")
 fi
 
+
 # Check if dirs exist before using them
 if [[ -d "$REPO_SNIPPETS_DIR" ]]; then 
   logdStdErr "  REPO_SNIPPETS_DIR was located: $REPO_SNIPPETS_DIR"
@@ -364,13 +382,13 @@ elif [[ "$MODE" == 'rename' ]]; then
     # ensure that each snippet file is named the same as defined within the file. 
     for (( i=0; i<"${#snippets[@]}"; i++)); do
       filename=$(basename "${snippets[$i]}")
-      snippetname=$(/usr/libexec/PlistBuddy -c "print :IDECodeSnippetTitle" "${snippets[$i]}")
-      corrected_filename="${snippetname}.codesnippet"
+      snippettitle=$(/usr/libexec/PlistBuddy -c "print :IDECodeSnippetTitle" "${snippets[$i]}")
+      corrected_filename="${snippettitle}.codesnippet"
       command="mv \"${snippets[$i]}\" \"${CLIENT_SNIPPETS_DIR}/${corrected_filename}\""
 
       if [[ "${filename}" != "${corrected_filename}" ]]; then 
         logdStdErr "snippets[$i]:"
-        # logdStdErr "  snippet: ${snippetname}"
+        # logdStdErr "  snippet: ${snippettitle}"
         logdStdErr "  filename: ${filename}"
         logdStdErr "  corrected_filename: ${corrected_filename}"
         logdStdErr "  command: ${command}"
@@ -394,7 +412,7 @@ elif [[ "$MODE" == 'install' || "$MODE" == 'install-clean' ]]; then
       find "${CLIENT_SNIPPETS_DIR}" -maxdepth 1 -type f -print0 | xargs -0 -I {} cp {} "${BACKUP_DIR}"
       logStdErr "Did copy existing ${IDE} snippets to backup dir: ${ANSI_FILEPATH}${BACKUP_DIR}${ANSI_DEFAULT}"
     elif [[ "$MODE" == 'install-clean' ]]; then
-      # FIXME: zakkhoyt. condider only deleting those files where either filename or snippetname begins with TEAM_PREFIX      
+      # FIXME: zakkhoyt. condider only deleting those files where either filename or snippettitle begins with TEAM_PREFIX      
       find "${CLIENT_SNIPPETS_DIR}" -maxdepth 1 -type f -print0 | xargs -0 -I {} mv {} "${BACKUP_DIR}"
       logStdErr "Did move existing ${IDE} snippets to backup dir: ${ANSI_FILEPATH}${BACKUP_DIR}${ANSI_DEFAULT}"
     else
@@ -434,18 +452,70 @@ elif [[ "$MODE" == 'backup' ]]; then
       # for xcode we want to rename the files as they are being copied
 
       # Get array of snippet files
-      snippets=()
+      snippet_source_files=()
+      # while IFS=  read -r -d $'\0'; do
+      #     snippet_source_files+=("$REPLY")
+      # done < <(find "${CLIENT_SNIPPETS_DIR}" -maxdepth 1 -type f -name "${TEAM_PREFIX}*.${SNIPPET_EXTENSION}" -print0)
       while IFS=  read -r -d $'\0'; do
-          snippets+=("$REPLY")
-      done < <(find "${CLIENT_SNIPPETS_DIR}" -maxdepth 1 -type f -name "${TEAM_PREFIX}*.${SNIPPET_EXTENSION}" -print0)
+          snippet_source_files+=("$REPLY")
+      done < <(find "${CLIENT_SNIPPETS_DIR}" -maxdepth 1 -type f -name "*.${SNIPPET_EXTENSION}" -print0)
+      logdStdErr "snippet_source_files.count: ${#snippet_source_files[@]}"
+
+
+      # Either retain or discard each
+      retained_snippet_source_files=()
+      discarded_snippet_source_files=("$@")
+      for ((i=0; i<="${#snippet_source_files[@]}"; i++)); do
+        snippet_source_file="${snippet_source_files[$i]}"
+        if [[ -z "$snippet_source_file" ]]; then continue; fi
+        logdStdErr "  snippet_source_files[$i]: $snippet_source_file"
+
+        snippet_basename=$(basename "${snippet_source_file}")
+        logdStdErr "    snippet_basename: $snippet_basename"
+        snippet_title=$(/usr/libexec/PlistBuddy -c "print :IDECodeSnippetTitle" "$snippet_source_file")
+        logdStdErr "    snippet_title: $snippet_title"
+
+        if [[ "$snippet_source_file" == "${TEAM_PREFIX}"*".${SNIPPET_EXTENSION}" ]]; then 
+          logdStdErr "        snippet_basename: contains ${TEAM_PREFIX}. Retaining..."
+          retained_snippet_source_files=("${retained_snippet_source_files[@]}" "$snippet_source_file")
+        elif [[ "$snippet_title" == "${TEAM_PREFIX}"* ]]; then 
+          logdStdErr "        snippet_title: contains ${TEAM_PREFIX}. Retaining..."
+          retained_snippet_source_files=("${retained_snippet_source_files[@]}" "$snippet_source_file")
+        else
+          logdStdErr "    snippet does not refer to ${TEAM_PREFIX}. Discarding..."
+        fi
+      done
+      
+      logdStdErr "retained_snippet_source_files.count: ${#retained_snippet_source_files[@]}"
+      for ((i=0; i<="${#retained_snippet_source_files[@]}"; i++)); do
+        retained_snippet_source_file="${retained_snippet_source_files[$i]}"
+        if [[ -z "$retained_snippet_source_file" ]]; then continue; fi
+        logdStdErr --green "  retained_snippet_source_files[$i]: $retained_snippet_source_file" --default
+      done
+
+      logdStdErr "discarded_snippet_source_files.count: ${#discarded_snippet_source_files[@]}"
+      for ((i=0; i<="${#discarded_snippet_source_files[@]}"; i++)); do
+        discarded_snippet_source_file="${discarded_snippet_source_files[$i]}"
+        if [[ -z "$discarded_snippet_source_file" ]]; then continue; fi
+        logdStdErr -red "  discarded_snippet_source_files[$i]: $discarded_snippet_source_file" --default
+      done
+      
+      return 0
+
+
+  #     cat "$FILE" | grep "<key>IDECodeSnippetTitle</key>
+	# <string>${TEAM_PREFIX}"
       
       # logdStdErr "snippets: ${snippets[@]}"
+
+
+      snippets=()
 
       # ensure that each snippet file is named the same as defined within the file. 
       for (( i=0; i<"${#snippets[@]}"; i++)); do
         filename=$(basename "${snippets[$i]}")
-        snippetname=$(/usr/libexec/PlistBuddy -c "print :IDECodeSnippetTitle" "${snippets[$i]}")
-        corrected_filename="${snippetname}.codesnippet"
+        snippettitle=$(/usr/libexec/PlistBuddy -c "print :IDECodeSnippetTitle" "${snippets[$i]}")
+        corrected_filename="${snippettitle}.codesnippet"
         command="cp \"${snippets[$i]}\" \"${REPO_SNIPPETS_DIR}/${corrected_filename}\""
 
         logdStdErr "snippets[$i]:"
