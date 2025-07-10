@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDECodeSnippetCompletionPrefix</key>
+	<string></string>
+	<key>IDECodeSnippetCompletionScopes</key>
+	<array>
+		<string>All</string>
+	</array>
+	<key>IDECodeSnippetContents</key>
+	<string>        .target(
+            name: &lt;#T##String#&gt;,
+            dependencies: &lt;#T##[Target.Dependency]#&gt;,
+            path: &lt;#T##String?#&gt;,
+            exclude: &lt;#T##[String]#&gt;,
+            sources: &lt;#T##[String]?#&gt;,
+            resources: &lt;#T##[Resource]?#&gt;,
+            publicHeadersPath: &lt;#T##String?#&gt;,
+            packageAccess: &lt;#T##Bool#&gt;,
+            cSettings: &lt;#T##[CSetting]?#&gt;,
+            cxxSettings: &lt;#T##[CXXSetting]?#&gt;,
+            swiftSettings: &lt;#T##[SwiftSetting]?#&gt;,
+            linkerSettings: &lt;#T##[LinkerSetting]?#&gt;,
+            plugins: &lt;#T##[Target.PluginUsage]?#&gt;
+        ) </string>
+	<key>IDECodeSnippetIdentifier</key>
+	<string>268CE079-BAF1-46CC-A97D-EDF7C8AD336B</string>
+	<key>IDECodeSnippetLanguage</key>
+	<string>Xcode.SourceCodeLanguage.Swift</string>
+	<key>IDECodeSnippetSummary</key>
+	<string>All placeholders for a target in Package.swift </string>
+	<key>IDECodeSnippetTitle</key>
+	<string>hatch_swift_package_target</string>
+	<key>IDECodeSnippetUserSnippet</key>
+	<true/>
+	<key>IDECodeSnippetVersion</key>
+	<integer>0</integer>
+</dict>
+</plist>
