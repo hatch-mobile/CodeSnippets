@@ -531,8 +531,8 @@ elif [[ "$MODE" == 'backup' ]]; then
         snippet_basename=$(basename "${retained_snippet_source_file}")
         snippet_title=$(/usr/libexec/PlistBuddy -c "print :IDECodeSnippetTitle" "${retained_snippet_source_file}")
         corrected_snippet_basename="${snippet_title}.codesnippet"
-        snippet_dest_file="${REPO_SNIPPETS_DIR}/${corrected_filename}"
-        rename_and_copy_command="cp \"$retained_snippet_source_file\" \"$snippet_dest_file}\""
+        snippet_dest_file="${REPO_SNIPPETS_DIR}/${corrected_snippet_basename}"
+        rename_and_copy_command="cp \"$retained_snippet_source_file\" \"${snippet_dest_file}\""
 
         logdStdErr "  snippet_basename: ${snippet_basename}"
         logdStdErr "  snippet_title: ${snippet_title}"
@@ -541,7 +541,7 @@ elif [[ "$MODE" == 'backup' ]]; then
         logdStdErr "  snippet_dest_file: ${snippet_dest_file}"
         logdStdErr "  rename_and_copy_command: ${rename_and_copy_command}"
         # if [[ "${filename}" != "${corrected_filename}" ]]; then 
-          logStdErr "  renaming file: ${filename} to ${corrected_filename}"
+          # logStdErr "  renaming file: ${retained_snippet_source_file} to ${snippet_dest_file}"
         # fi
 
         if [[ -n "$IS_DRYRUN" ]]; then 
@@ -561,21 +561,21 @@ elif [[ "$MODE" == 'backup' ]]; then
       done
       
 
-      # ensure that each snippet file is named the same as defined within the file. 
-      for (( i=0; i<"${#retained_snippet_source_files[@]}"; i++)); do
-        filename=$(basename "${retained_snippet_source_files[$i]}")
-        snippettitle=$(/usr/libexec/PlistBuddy -c "print :IDECodeSnippetTitle" "${retained_snippet_source_files[$i]}")
-        corrected_filename="${snippettitle}.codesnippet"
-        command="cp \"${retained_snippet_source_files[$i]}\" \"${REPO_SNIPPETS_DIR}/${corrected_filename}\""
+      # # ensure that each snippet file is named the same as defined within the file. 
+      # for (( i=0; i<"${#retained_snippet_source_files[@]}"; i++)); do
+      #   filename=$(basename "${retained_snippet_source_files[$i]}")
+      #   snippettitle=$(/usr/libexec/PlistBuddy -c "print :IDECodeSnippetTitle" "${retained_snippet_source_files[$i]}")
+      #   corrected_filename="${snippettitle}.codesnippet"
+      #   command="cp \"${retained_snippet_source_files[$i]}\" \"${REPO_SNIPPETS_DIR}/${corrected_filename}\""
 
-        logdStdErr "retained_snippet_source_files[$i]:"
-        logdStdErr "  filename: ${filename}"
-        logdStdErr "  corrected_filename: ${corrected_filename}"
-        if [[ "${filename}" != "${corrected_filename}" ]]; then 
-          logStdErr "  renaming file: ${filename} to ${corrected_filename}"
-        fi
-        eval "$command"
-      done
+      #   logdStdErr "retained_snippet_source_files[$i]:"
+      #   logdStdErr "  filename: ${filename}"
+      #   logdStdErr "  corrected_filename: ${corrected_filename}"
+      #   if [[ "${filename}" != "${corrected_filename}" ]]; then 
+      #     logStdErr "  renaming file: ${filename} to ${corrected_filename}"
+      #   fi
+      #   eval "$command"
+      # done
     else 
       set -x
       cp "${CLIENT_SNIPPETS_DIR}/${TEAM_PREFIX}"*."${SNIPPET_EXTENSION}" "${REPO_SNIPPETS_DIR}"
